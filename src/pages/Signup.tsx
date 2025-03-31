@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Facebook, Mail, Lock, User, Linkedin } from 'lucide-react';
@@ -200,12 +201,12 @@ const Signup = () => {
       
       {/* Right side - Banner */}
       <div className="hidden md:block md:w-1/2 bg-workify-blue text-white p-12 flex flex-col justify-center">
-        <div className="max-w-md mx-auto text-center">
-          <h2 className="text-5xl font-bold mb-6">Welcome Back!</h2>
+        <div className="max-w-md mx-auto flex flex-col items-center justify-center h-full text-center">
+          <h2 className="text-5xl font-bold mb-6">New Here?</h2>
           <p className="text-xl mb-8">
-            Log in to access your account and continue your job search journey.
+            Sign up today and unlock endless job opportunities!
           </p>
-          <Link to="/login">
+          <Link to="/login" className="mt-4">
             <Button className="bg-white text-workify-blue hover:bg-gray-100 px-8 py-6 text-lg font-medium">
               Login
             </Button>
