@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Briefcase, Mail, GraduationCap, Bell, Search, MapPin, Filter, ChevronDown } from 'lucide-react';
@@ -9,12 +8,28 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 const Index = () => {
+  const images = {
+    heroBackground: '/assets/hero-background.jpg',
+    companyLogos: ['/assets/company-logo-1.png', '/assets/company-logo-2.png', '/assets/company-logo-3.png'],
+    featureIcons: {
+      browse: '/assets/feature-browse.png',
+      apply: '/assets/feature-apply.png',
+      resume: '/assets/feature-resume.png',
+      alerts: '/assets/feature-alerts.png'
+    },
+    statIcons: {
+      jobs: '/assets/stat-jobs.png',
+      companies: '/assets/stat-companies.png',
+      applications: '/assets/stat-applications.png'
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       
-      {/* Hero Section */}
-      <div className="header-section">
+      <div className="header-section" 
+           style={{backgroundImage: `linear-gradient(to right, rgba(248, 250, 252, 0.95), rgba(241, 245, 249, 0.9)), url(${images.heroBackground})`}}>
         <div className="container mx-auto px-4 py-12 md:py-20">
           <div className="flex flex-wrap items-center">
             <div className="w-full lg:w-3/5 mb-8 lg:mb-0">
@@ -24,7 +39,6 @@ const Index = () => {
               </h1>
               <p className="text-xl text-gray-600 mb-8">Discover thousands of job opportunities with all the information you need.</p>
               
-              {/* Search Form */}
               <div className="bg-white p-4 rounded-xl shadow-sm">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="relative">
@@ -73,18 +87,16 @@ const Index = () => {
         </div>
       </div>
       
-      {/* Stats Section */}
       <div className="py-8 bg-white">
         <div className="container mx-auto">
           <div className="flex flex-wrap justify-center py-4">
-            <StatCounter count="10k +" label="Available jobs" />
-            <StatCounter count="1k +" label="Companies" />
-            <StatCounter count="30" label="Applications in 1 day" />
+            <StatCounter count="10k +" label="Available jobs" iconSrc={images.statIcons.jobs} />
+            <StatCounter count="1k +" label="Companies" iconSrc={images.statIcons.companies} />
+            <StatCounter count="30" label="Applications in 1 day" iconSrc={images.statIcons.applications} />
           </div>
         </div>
       </div>
       
-      {/* Getting Started Section */}
       <div className="py-12 px-4 bg-gray-50">
         <div className="container mx-auto">
           <h2 className="text-3xl font-bold mb-12 px-4 text-center">How Workify Helps You</h2>
@@ -95,6 +107,7 @@ const Index = () => {
                 icon={<Briefcase size={48} />}
                 title="Browse Jobs"
                 description="Find the perfect role for you from thousands of listings"
+                imageSrc={images.featureIcons.browse}
               />
             </Link>
             
@@ -103,6 +116,7 @@ const Index = () => {
                 icon={<Mail size={48} />}
                 title="Quick Apply"
                 description="Apply to multiple jobs with a single profile and resume"
+                imageSrc={images.featureIcons.apply}
               />
             </Link>
             
@@ -111,6 +125,7 @@ const Index = () => {
                 icon={<GraduationCap size={48} />}
                 title="Resume Maker"
                 description="Create a professional resume that stands out to employers"
+                imageSrc={images.featureIcons.resume}
               />
             </Link>
             
@@ -119,13 +134,13 @@ const Index = () => {
                 icon={<Bell size={48} />}
                 title="Job Alerts"
                 description="Get notified when new jobs matching your criteria are posted"
+                imageSrc={images.featureIcons.alerts}
               />
             </Link>
           </div>
         </div>
       </div>
       
-      {/* Featured Jobs Section */}
       <div className="py-12 px-4 bg-white">
         <div className="container mx-auto">
           <div className="flex justify-between items-center mb-8">
@@ -163,7 +178,6 @@ const Index = () => {
         </div>
       </div>
       
-      {/* CTA Section */}
       <div className="py-16 px-4 bg-workify-lightGray">
         <div className="container mx-auto max-w-4xl text-center">
           <h2 className="text-3xl font-bold mb-4">Ready to start your career journey?</h2>

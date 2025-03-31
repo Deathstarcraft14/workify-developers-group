@@ -10,6 +10,8 @@ interface PageHeaderProps {
 const PageHeader: React.FC<PageHeaderProps> = ({ title, subtitle, backgroundImage }) => {
   const style = backgroundImage ? {
     backgroundImage: `linear-gradient(to right, rgba(248, 250, 252, 0.95), rgba(241, 245, 249, 0.9)), url(${backgroundImage})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
   } : {};
 
   return (
