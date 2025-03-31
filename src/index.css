@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,19 +36,12 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
@@ -98,4 +92,66 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+.feature-card {
+  @apply bg-white rounded-3xl shadow-md p-6 flex flex-col items-center text-center relative overflow-hidden;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: linear-gradient(90deg, #e0e7ff 0%, #93c5fd 100%);
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.job-card {
+  @apply bg-white rounded-3xl shadow-sm p-6 mb-4 relative overflow-hidden;
+  border-radius: 15px;
+  border: 1px solid #f1f5f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.job-card-alt {
+  @apply rounded-xl shadow-sm p-6 mb-4 relative overflow-hidden;
+  border-radius: 15px;
+  border: 1px solid rgba(241, 245, 249, 0.3);
+}
+
+.btn-primary {
+  @apply bg-workify-navy text-white py-2 px-4 rounded-full font-medium hover:bg-blue-900 transition-colors;
+}
+
+.btn-bookmark {
+  @apply text-gray-400 hover:text-gray-600;
+}
+
+.badge {
+  @apply bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-md mr-2;
+}
+
+.search-container {
+  @apply relative w-full max-w-md;
+}
+
+.search-container input {
+  @apply w-full py-2 px-4 pr-10 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300;
+}
+
+.search-container button {
+  @apply absolute right-2 top-1/2 -translate-y-1/2 text-gray-500;
+}
+
+.header-section {
+  @apply relative overflow-hidden bg-slate-100 py-10 md:py-16;
+  background-image: linear-gradient(to right, rgba(248, 250, 252, 0.95), rgba(241, 245, 249, 0.9)), url('/lovable-uploads/bcef0a86-ce9e-4181-8f07-1546a6f54a9d.png');
+  background-size: cover;
+  background-position: center;
 }
