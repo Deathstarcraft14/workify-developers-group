@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Facebook, Mail, Lock, User, Linkedin } from 'lucide-react';
@@ -6,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '../context/AuthContext';
 
 const Signup = () => {
   const [fullName, setFullName] = useState('');
@@ -15,6 +15,7 @@ const Signup = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { signup } = useAuth();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,23 +31,31 @@ const Signup = () => {
     
     setIsLoading(true);
     
-    // Simulating API call
-    setTimeout(() => {
-      // Store user info in localStorage (not secure, would use proper auth in production)
-      localStorage.setItem('user', JSON.stringify({ 
-        fullName, 
-        email, 
-        isLoggedIn: true 
-      }));
+    try {
+      const success = await signup(fullName, email, password);
       
+      if (success) {
+        toast({
+          title: "Account created",
+          description: "Welcome to Workify!",
+        });
+        navigate('/profile');
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Signup failed",
+          description: "Please check your information and try again.",
+        });
+      }
+    } catch (error) {
       toast({
-        title: "Account created",
-        description: "Welcome to Workify!",
+        variant: "destructive",
+        title: "Signup error",
+        description: "An unexpected error occurred. Please try again.",
       });
-      
-      navigate('/profile');
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleSocialSignup = (provider: string) => {

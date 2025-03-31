@@ -15,9 +15,11 @@ type AuthContextType = {
   isAuthenticated: boolean;
 };
 
+// Create context with a default undefined value
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+// Proper functional component declaration
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
@@ -25,9 +27,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     // Check if user is logged in on mount
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-      setUser(parsedUser);
-      setIsAuthenticated(parsedUser.isLoggedIn);
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+        setIsAuthenticated(parsedUser.isLoggedIn);
+      } catch (e) {
+        // Handle invalid JSON in localStorage
+        localStorage.removeItem('user');
+        console.error('Invalid user data in localStorage');
+      }
     }
   }, []);
 

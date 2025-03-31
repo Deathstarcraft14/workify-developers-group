@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ChevronDown, Search, User, LogOut, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -10,26 +10,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState('');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Check if user is logged in
-    const user = localStorage.getItem('user');
-    if (user) {
-      const userData = JSON.parse(user);
-      setIsLoggedIn(userData.isLoggedIn);
-      setUserName(userData.fullName || userData.email.split('@')[0]);
-    }
-  }, []);
+  const { user, isAuthenticated, logout } = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
-    setIsLoggedIn(false);
+    logout();
     navigate('/login');
   };
 
@@ -92,7 +81,7 @@ const Navbar = () => {
             </div>
 
             <div className="ml-4 flex items-center md:ml-6">
-              {isLoggedIn ? (
+              {isAuthenticated ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" className="rounded-full" size="icon">
@@ -103,7 +92,7 @@ const Navbar = () => {
                   <DropdownMenuContent align="end">
                     <div className="px-4 py-3">
                       <p className="text-sm">Signed in as</p>
-                      <p className="text-sm font-medium truncate">{userName}</p>
+                      <p className="text-sm font-medium truncate">{user?.fullName || user?.email.split('@')[0]}</p>
                     </div>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
@@ -173,7 +162,7 @@ const Navbar = () => {
             </Link>
           </div>
           
-          {!isLoggedIn && (
+          {!isAuthenticated && (
             <div className="pt-4 pb-3 border-t border-gray-200">
               <div className="flex items-center px-4 space-x-2">
                 <Button variant="outline" className="w-full" asChild>

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Mail, MapPin, Briefcase, Calendar, Edit2, LogOut, Plus } from 'lucide-react';
@@ -10,6 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import Navbar from '../components/Navbar';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '../context/AuthContext';
 
 interface UserProfile {
   fullName: string;
@@ -40,37 +40,35 @@ const defaultProfile: UserProfile = {
 };
 
 const Profile = () => {
-  const [user, setUser] = useState<UserProfile | null>(null);
+  const [profileData, setProfileData] = useState<UserProfile | null>(null);
   const [isEditing, setIsEditing] = useState(false);
-  const [editedUser, setEditedUser] = useState<UserProfile>(defaultProfile);
+  const [editedProfile, setEditedProfile] = useState<UserProfile>(defaultProfile);
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { user, isAuthenticated, logout } = useAuth();
 
   useEffect(() => {
-    // Check if the user is logged in
-    const storedUser = localStorage.getItem('user');
-    
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-      
-      // Merge with default profile for demo purposes
-      setUser({
-        ...defaultProfile,
-        ...parsedUser
-      });
-      
-      setEditedUser({
-        ...defaultProfile,
-        ...parsedUser
-      });
-    } else {
-      // Redirect to login if not logged in
+    if (!isAuthenticated) {
       navigate('/login');
+      return;
     }
-  }, [navigate]);
+    
+    // Merge user data with default profile data
+    if (user) {
+      const mergedProfile = {
+        ...defaultProfile,
+        fullName: user.fullName || defaultProfile.fullName,
+        email: user.email || defaultProfile.email,
+        isLoggedIn: true
+      };
+      
+      setProfileData(mergedProfile);
+      setEditedProfile(mergedProfile);
+    }
+  }, [isAuthenticated, user, navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem('user');
+    logout();
     toast({
       title: "Logged out",
       description: "You have been successfully logged out.",
@@ -79,8 +77,21 @@ const Profile = () => {
   };
 
   const handleSaveProfile = () => {
-    setUser(editedUser);
-    localStorage.setItem('user', JSON.stringify(editedUser));
+    setProfileData(editedProfile);
+    
+    // Update only the user fields in localStorage, not the entire profile with default data
+    if (user) {
+      const updatedUser = {
+        ...user,
+        fullName: editedProfile.fullName,
+        email: editedProfile.email,
+        location: editedProfile.location,
+        bio: editedProfile.bio
+      };
+      
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+    }
+    
     setIsEditing(false);
     toast({
       title: "Profile updated",
@@ -90,13 +101,13 @@ const Profile = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setEditedUser({
-      ...editedUser,
+    setEditedProfile({
+      ...editedProfile,
       [name]: value
     });
   };
 
-  if (!user) {
+  if (!profileData) {
     return <div className="flex justify-center items-center h-screen">Loading...</div>;
   }
 
@@ -111,32 +122,32 @@ const Profile = () => {
             <Card>
               <CardHeader className="text-center">
                 <div className="mx-auto w-24 h-24 bg-workify-blue text-white rounded-full flex items-center justify-center mb-4">
-                  <span className="text-3xl font-bold">{user.fullName.charAt(0)}</span>
+                  <span className="text-3xl font-bold">{profileData.fullName.charAt(0)}</span>
                 </div>
-                <CardTitle>{user.fullName}</CardTitle>
+                <CardTitle>{profileData.fullName}</CardTitle>
                 <CardDescription className="flex items-center justify-center">
                   <Mail className="w-4 h-4 mr-1" />
-                  {user.email}
+                  {profileData.email}
                 </CardDescription>
-                {user.location && (
+                {profileData.location && (
                   <CardDescription className="flex items-center justify-center mt-1">
                     <MapPin className="w-4 h-4 mr-1" />
-                    {user.location}
+                    {profileData.location}
                   </CardDescription>
                 )}
               </CardHeader>
               <CardContent>
-                {user.bio && (
+                {profileData.bio && (
                   <div className="mb-4">
                     <h3 className="font-medium text-sm text-gray-500 mb-1">About</h3>
-                    <p className="text-sm">{user.bio}</p>
+                    <p className="text-sm">{profileData.bio}</p>
                   </div>
                 )}
                 
                 <div className="mb-4">
                   <h3 className="font-medium text-sm text-gray-500 mb-1">Skills</h3>
                   <div className="flex flex-wrap gap-2">
-                    {user.skills?.map((skill, index) => (
+                    {profileData.skills?.map((skill, index) => (
                       <span key={index} className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">
                         {skill}
                       </span>
@@ -180,7 +191,7 @@ const Profile = () => {
                     <Input
                       id="fullName"
                       name="fullName"
-                      value={editedUser.fullName}
+                      value={editedProfile.fullName}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -191,7 +202,7 @@ const Profile = () => {
                       id="email"
                       name="email"
                       type="email"
-                      value={editedUser.email}
+                      value={editedProfile.email}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -201,7 +212,7 @@ const Profile = () => {
                     <Input
                       id="location"
                       name="location"
-                      value={editedUser.location || ''}
+                      value={editedProfile.location || ''}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -212,7 +223,7 @@ const Profile = () => {
                       id="bio"
                       name="bio"
                       rows={4}
-                      value={editedUser.bio || ''}
+                      value={editedProfile.bio || ''}
                       onChange={handleInputChange}
                     />
                   </div>
@@ -243,7 +254,7 @@ const Profile = () => {
                       </Button>
                     </CardHeader>
                     <CardContent>
-                      {user.experience?.map((exp, index) => (
+                      {profileData.experience?.map((exp, index) => (
                         <div key={index} className="mb-4 pb-4 border-b last:border-0">
                           <div className="flex items-start">
                             <Briefcase className="w-5 h-5 mr-2 mt-0.5 text-gray-500" />
@@ -270,7 +281,7 @@ const Profile = () => {
                       </Button>
                     </CardHeader>
                     <CardContent>
-                      {user.education?.map((edu, index) => (
+                      {profileData.education?.map((edu, index) => (
                         <div key={index} className="mb-4 pb-4 border-b last:border-0">
                           <div className="flex items-start">
                             <Calendar className="w-5 h-5 mr-2 mt-0.5 text-gray-500" />

@@ -1,10 +1,10 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Facebook, Mail, Lock, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -12,17 +12,16 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     
-    // Simulating API call
-    setTimeout(() => {
-      // For demo purposes, we'll just check if email and password are not empty
-      if (email && password) {
-        // Store login info in localStorage (not secure, would use proper auth in production)
-        localStorage.setItem('user', JSON.stringify({ email, isLoggedIn: true }));
+    try {
+      const success = await login(email, password);
+      
+      if (success) {
         toast({
           title: "Login successful",
           description: "Welcome back to Workify!",
@@ -35,8 +34,15 @@ const Login = () => {
           description: "Please check your credentials and try again.",
         });
       }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Login error",
+        description: "An unexpected error occurred. Please try again.",
+      });
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   const handleSocialLogin = (provider: string) => {
