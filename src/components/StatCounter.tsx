@@ -8,9 +8,9 @@ interface StatCounterProps {
 
 const StatCounter: React.FC<StatCounterProps> = ({ count, label }) => {
   return (
-    <div className="text-center px-4">
-      <span className="text-2xl md:text-3xl font-bold text-workify-blue">{count}</span>
-      <span className="text-lg md:text-xl text-gray-700"> {label}</span>
+    <div className="text-center px-8 py-4 border-r last:border-r-0 border-gray-200">
+      <span className="text-3xl md:text-4xl font-bold text-workify-blue block">{count}</span>
+      <span className="text-sm md:text-base text-gray-600 mt-1 block">{label}</span>
     </div>
   );
 };
