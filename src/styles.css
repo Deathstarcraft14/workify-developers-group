@@ -44,6 +44,14 @@ body {
 
 .feature-card {
   @apply bg-white p-6 rounded-lg border border-gray-200 text-center shadow-sm;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .header-section {
@@ -52,4 +60,3 @@ body {
   background-size: cover;
   background-position: center;
 }
-

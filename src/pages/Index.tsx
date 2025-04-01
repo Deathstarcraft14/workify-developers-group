@@ -98,44 +98,40 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             <Link to="/jobs">
               <FeatureCard
-                icon={<Briefcase size={48} />}
+                icon={<Briefcase size={48} className="text-workify-blue" />}
                 title="Browse Jobs"
                 description="Find the perfect role for you from thousands of listings"
-                imageSrc={images.featureIcons.browse}
               />
             </Link>
             
             <Link to="/quick-apply">
               <FeatureCard
-                icon={<Mail size={48} />}
+                icon={<Mail size={48} className="text-workify-blue" />}
                 title="Quick Apply"
-                description="Apply to multiple jobs with a single profile and resume"
-                imageSrc={images.featureIcons.apply}
+                description="Tired of doing the same process over and over?"
               />
             </Link>
             
             <Link to="/resume">
               <FeatureCard
-                icon={<GraduationCap size={48} />}
+                icon={<GraduationCap size={48} className="text-workify-blue" />}
                 title="Resume Maker"
-                description="Create a professional resume that stands out to employers"
-                imageSrc={images.featureIcons.resume}
+                description="Make the perfect resume"
               />
             </Link>
             
             <Link to="/alerts">
               <FeatureCard
-                icon={<Bell size={48} />}
+                icon={<Bell size={48} className="text-workify-blue" />}
                 title="Job Alerts"
-                description="Get notified when new jobs matching your criteria are posted"
-                imageSrc={images.featureIcons.alerts}
+                description="Get notified of all the new job openings!"
               />
             </Link>
           </div>
         </div>
       </div>
       
-      <div className="py-12 px-4 bg-white">
+      <div className="py-12 px-4 bg-gray-50">
         <div className="container mx-auto">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-3xl font-bold">Featured Jobs</h2>
