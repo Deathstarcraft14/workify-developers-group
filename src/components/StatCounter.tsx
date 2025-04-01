@@ -16,8 +16,8 @@ const StatCounter: React.FC<StatCounterProps> = ({ count, label, iconSrc }) => {
             <img src={iconSrc} alt={label} className="w-6 h-6 object-contain mx-auto" />
           </div>
         )}
-        <span className="text-4xl font-bold text-workify-blue">{count}</span>
-        <span className="text-gray-600 mt-1">{label}</span>
+        <span className="text-2xl font-bold text-workify-blue">{count}</span>
+        <span className="text-gray-600 text-sm mt-1">{label}</span>
       </div>
     </div>
   );

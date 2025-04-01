@@ -71,13 +71,21 @@ h1, h2, h3, h4, h5, h6 {
   background-position: center;
 }
 
+/* Stats section styling */
 .stat-counter {
-  @apply text-center py-6 px-4;
-  border-right: 1px solid #e2e8f0;
+  @apply text-center py-4 px-8;
+  position: relative;
 }
 
-.stat-counter:last-child {
-  border-right: none;
+.stat-counter:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 50%;
+  width: 1px;
+  background-color: #e2e8f0;
 }
 
 /* Welcome typography styling */
