@@ -60,13 +60,7 @@ const Login = () => {
         <div className="w-full max-w-md">
           <div className="mb-8">
             <Link to="/" className="flex items-center">
-              <div className="bg-workify-blue bg-opacity-10 rounded-full p-2">
-                <div className="bg-workify-blue bg-opacity-20 rounded-full p-1">
-                  <div className="bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-sm">
-                    <span className="text-workify-blue text-xl font-bold">W</span>
-                  </div>
-                </div>
-              </div>
+              <img src="/lovable-uploads/791c5abf-a844-481a-b4b0-8248c6f77267.png" alt="Workify Logo" className="h-12 w-12" />
               <span className="ml-2 text-2xl font-bold text-workify-blue">Workify</span>
             </Link>
           </div>

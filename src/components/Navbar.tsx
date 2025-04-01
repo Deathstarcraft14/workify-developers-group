@@ -43,25 +43,22 @@ const Navbar = () => {
             </button>
 
             <Link to="/" className="flex items-center ml-2 md:ml-0">
-              <div className="bg-workify-blue bg-opacity-10 rounded-full p-1">
-                <div className="bg-workify-blue bg-opacity-20 rounded-full p-0.5">
-                  <div className="bg-white rounded-full w-8 h-8 flex items-center justify-center shadow-sm">
-                    <span className="text-workify-blue text-xl font-bold">W</span>
-                  </div>
-                </div>
-              </div>
+              <img src="/lovable-uploads/791c5abf-a844-481a-b4b0-8248c6f77267.png" alt="Workify Logo" className="h-8 w-8" />
               <span className="ml-2 text-xl font-bold text-workify-blue">Workify</span>
             </Link>
             
             <div className="hidden md:flex md:ml-6 space-x-8">
+              <Link to="/" className="text-gray-700 hover:text-workify-blue hover:border-workify-blue inline-flex items-center px-1 pt-1 border-b-2 border-transparent">
+                Home
+              </Link>
+              <Link to="/applications" className="text-gray-700 hover:text-workify-blue hover:border-workify-blue inline-flex items-center px-1 pt-1 border-b-2 border-transparent">
+                Application
+              </Link>
+              <Link to="/messages" className="text-gray-700 hover:text-workify-blue hover:border-workify-blue inline-flex items-center px-1 pt-1 border-b-2 border-transparent">
+                Messages
+              </Link>
               <Link to="/jobs" className="text-gray-700 hover:text-workify-blue hover:border-workify-blue inline-flex items-center px-1 pt-1 border-b-2 border-transparent">
-                Jobs
-              </Link>
-              <Link to="/alerts" className="text-gray-700 hover:text-workify-blue hover:border-workify-blue inline-flex items-center px-1 pt-1 border-b-2 border-transparent">
-                Job Alerts
-              </Link>
-              <Link to="/quick-apply" className="text-gray-700 hover:text-workify-blue hover:border-workify-blue inline-flex items-center px-1 pt-1 border-b-2 border-transparent">
-                Quick Apply
+                Job opportunities
               </Link>
             </div>
           </div>
@@ -140,25 +137,32 @@ const Navbar = () => {
         <div className="md:hidden">
           <div className="pt-2 pb-3 space-y-1">
             <Link 
+              to="/"
+              className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-workify-blue hover:text-workify-blue"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Home
+            </Link>
+            <Link 
+              to="/applications"
+              className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-workify-blue hover:text-workify-blue"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Application
+            </Link>
+            <Link 
+              to="/messages"
+              className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-workify-blue hover:text-workify-blue"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Messages
+            </Link>
+            <Link 
               to="/jobs"
               className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-workify-blue hover:text-workify-blue"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Jobs
-            </Link>
-            <Link 
-              to="/alerts"
-              className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-workify-blue hover:text-workify-blue"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Job Alerts
-            </Link>
-            <Link 
-              to="/quick-apply"
-              className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-workify-blue hover:text-workify-blue"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Quick Apply
+              Job opportunities
             </Link>
           </div>
           

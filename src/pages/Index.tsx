@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 
 const Index = () => {
   const images = {
-    heroBackground: '/assets/hero-background.jpg',
+    heroBackground: '/lovable-uploads/a1e3f2d8-02b0-443d-bc28-77a17c1ba1d5.png',
     companyLogos: ['/assets/company-logo-1.png', '/assets/company-logo-2.png', '/assets/company-logo-3.png'],
     featureIcons: {
       browse: '/assets/feature-browse.png',
@@ -29,7 +29,7 @@ const Index = () => {
       <Navbar />
       
       <div className="header-section" 
-           style={{backgroundImage: `linear-gradient(to right, rgba(248, 250, 252, 0.95), rgba(241, 245, 249, 0.9)), url(${images.heroBackground})`}}>
+           style={{backgroundImage: `linear-gradient(to right, rgba(248, 250, 252, 0.85), rgba(241, 245, 249, 0.85)), url(${images.heroBackground})`}}>
         <div className="container mx-auto px-4 py-12 md:py-20">
           <div className="flex flex-wrap items-center">
             <div className="w-full lg:w-3/5 mb-8 lg:mb-0">
@@ -75,13 +75,7 @@ const Index = () => {
             </div>
             
             <div className="w-full lg:w-2/5 flex justify-center">
-              <div className="bg-workify-blue bg-opacity-10 rounded-full p-8 relative">
-                <div className="bg-workify-blue bg-opacity-20 rounded-full p-8">
-                  <div className="bg-white rounded-full p-6 shadow-md">
-                    <span className="text-workify-blue text-7xl font-bold">W</span>
-                  </div>
-                </div>
-              </div>
+              <img src="/lovable-uploads/791c5abf-a844-481a-b4b0-8248c6f77267.png" alt="Workify Logo" className="h-48 w-48" />
             </div>
           </div>
         </div>

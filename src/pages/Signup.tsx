@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Facebook, Mail, Lock, User, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '../context/AuthContext';
 
@@ -12,7 +11,7 @@ const Signup = () => {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -21,11 +20,11 @@ const Signup = () => {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!agreedToTerms) {
+    if (password !== confirmPassword) {
       toast({
         variant: "destructive",
-        title: "Terms and Conditions",
-        description: "Please agree to the terms and conditions to continue.",
+        title: "Passwords do not match",
+        description: "Please make sure your passwords match.",
       });
       return;
     }
@@ -38,14 +37,14 @@ const Signup = () => {
       if (success) {
         toast({
           title: "Account created",
-          description: "Welcome to Workify!",
+          description: "Your account has been created successfully!",
         });
         navigate('/profile');
       } else {
         toast({
           variant: "destructive",
           title: "Signup failed",
-          description: "Please check your information and try again.",
+          description: "Email might already be in use. Please try again with a different email.",
         });
       }
     } catch (error) {
@@ -73,13 +72,7 @@ const Signup = () => {
         <div className="w-full max-w-md">
           <div className="mb-8">
             <Link to="/" className="flex items-center">
-              <div className="bg-workify-blue bg-opacity-10 rounded-full p-2">
-                <div className="bg-workify-blue bg-opacity-20 rounded-full p-1">
-                  <div className="bg-white rounded-full w-10 h-10 flex items-center justify-center shadow-sm">
-                    <span className="text-workify-blue text-xl font-bold">W</span>
-                  </div>
-                </div>
-              </div>
+              <img src="/lovable-uploads/791c5abf-a844-481a-b4b0-8248c6f77267.png" alt="Workify Logo" className="h-12 w-12" />
               <span className="ml-2 text-2xl font-bold text-workify-blue">Workify</span>
             </Link>
           </div>
@@ -124,21 +117,16 @@ const Signup = () => {
                 />
               </div>
               
-              <div className="flex items-center space-x-2">
-                <Checkbox 
-                  id="terms" 
-                  checked={agreedToTerms}
-                  onCheckedChange={(checked) => setAgreedToTerms(checked as boolean)}
+              <div className="relative">
+                <Lock className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+                <Input
+                  type="password"
+                  placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="pl-10"
+                  required
                 />
-                <label
-                  htmlFor="terms"
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                >
-                  I agree to the{" "}
-                  <Link to="/terms" className="text-workify-blue hover:underline">
-                    Terms and Conditions
-                  </Link>
-                </label>
               </div>
               
               <Button 
@@ -146,7 +134,7 @@ const Signup = () => {
                 className="w-full bg-workify-blue hover:bg-blue-700"
                 disabled={isLoading}
               >
-                {isLoading ? "Creating account..." : "Create Account"}
+                {isLoading ? "Creating account..." : "Sign Up"}
               </Button>
             </div>
           </form>
