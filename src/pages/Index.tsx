@@ -33,11 +33,11 @@ const Index = () => {
         <div className="container mx-auto px-4 py-12 md:py-20">
           <div className="flex flex-wrap items-center">
             <div className="w-full lg:w-3/5 mb-8 lg:mb-0">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-                <span className="text-gray-900">Find Your </span>
-                <span className="text-workify-blue">Dream Job</span>
+              <h1 className="welcome-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+                <span>Welcome to </span>
+                <span className="highlight">Workify</span>
               </h1>
-              <p className="text-xl text-gray-600 mb-8">Discover thousands of job opportunities with all the information you need.</p>
+              <p className="welcome-subheading text-xl mb-8">Where Job Hunting is Easier</p>
               
               <div className="bg-white p-4 rounded-xl shadow-sm">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -83,28 +83,28 @@ const Index = () => {
       
       <div className="py-8 bg-white">
         <div className="container mx-auto">
-          <div className="flex flex-wrap justify-center py-4">
-            <StatCounter count="10k +" label="Available jobs" iconSrc={images.statIcons.jobs} />
-            <StatCounter count="1k +" label="Companies" iconSrc={images.statIcons.companies} />
-            <StatCounter count="30" label="Applications in 1 day" iconSrc={images.statIcons.applications} />
+          <div className="flex flex-wrap justify-between py-4">
+            <StatCounter count="10k +" label="Available jobs" />
+            <StatCounter count="1k +" label="Companies" />
+            <StatCounter count="30" label="Applications in 1 day" />
           </div>
         </div>
       </div>
       
       <div className="py-12 px-4 bg-gray-50">
         <div className="container mx-auto">
-          <h2 className="text-3xl font-bold mb-12 px-4 text-center">How Workify Helps You</h2>
+          <h2 className="text-3xl font-bold mb-12 px-4 text-center">Getting Started...</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            <Link to="/jobs">
+            <Link to="/jobs" className="h-full">
               <FeatureCard
                 icon={<Briefcase size={48} className="text-workify-blue" />}
                 title="Browse Jobs"
-                description="Find the perfect role for you from thousands of listings"
+                description="Find the perfect role for you"
               />
             </Link>
             
-            <Link to="/quick-apply">
+            <Link to="/quick-apply" className="h-full">
               <FeatureCard
                 icon={<Mail size={48} className="text-workify-blue" />}
                 title="Quick Apply"
@@ -112,7 +112,7 @@ const Index = () => {
               />
             </Link>
             
-            <Link to="/resume">
+            <Link to="/resume" className="h-full">
               <FeatureCard
                 icon={<GraduationCap size={48} className="text-workify-blue" />}
                 title="Resume Maker"
@@ -120,7 +120,7 @@ const Index = () => {
               />
             </Link>
             
-            <Link to="/alerts">
+            <Link to="/alerts" className="h-full">
               <FeatureCard
                 icon={<Bell size={48} className="text-workify-blue" />}
                 title="Job Alerts"

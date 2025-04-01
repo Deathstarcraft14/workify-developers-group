@@ -6,8 +6,14 @@
   --workify-dark-gray: #4b5563;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
+
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Source Sans Pro', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
 }
 
 .bg-workify-blue {
@@ -47,6 +53,10 @@ body {
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .feature-card:hover {
@@ -59,4 +69,29 @@ body {
   background-image: linear-gradient(to right, rgba(248, 250, 252, 0.85), rgba(241, 245, 249, 0.85)), url('/lovable-uploads/529bf916-20a3-41a4-8b27-f18c622a6ab3.png');
   background-size: cover;
   background-position: center;
+}
+
+.stat-counter {
+  @apply text-center py-6 px-4;
+  border-right: 1px solid #e2e8f0;
+}
+
+.stat-counter:last-child {
+  border-right: none;
+}
+
+/* Welcome typography styling */
+.welcome-heading {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+}
+
+.welcome-heading .highlight {
+  color: var(--workify-blue);
+}
+
+.welcome-subheading {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 300;
+  color: #6B7280;
 }
