@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
 import Index from "./pages/Index";
 import BrowseJobs from "./pages/BrowseJobs";
+import JobDetails from "./pages/JobDetails";
 import QuickApply from "./pages/QuickApply";
 import JobAlerts from "./pages/JobAlerts";
 import Login from "./pages/Login";
@@ -31,6 +32,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/jobs" element={<BrowseJobs />} />
+            <Route path="/job-details/:id" element={<JobDetails />} />
             <Route path="/quick-apply" element={<QuickApply />} />
             <Route path="/alerts" element={<JobAlerts />} />
             <Route path="/login" element={<Login />} />

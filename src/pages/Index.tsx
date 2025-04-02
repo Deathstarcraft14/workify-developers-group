@@ -33,12 +33,6 @@ const Index = () => {
   const [salary, setSalary] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState<string>('');
 
-  const featuredCompanies = [
-    { id: 1, name: 'Google', logo: '/lovable-uploads/431ccb7e-e5e8-446e-8ff9-0ba688240e45.png' },
-    { id: 2, name: 'Microsoft', logo: '/lovable-uploads/704f738a-0952-4f67-9f38-34450ef3e395.png' },
-    { id: 3, name: 'Amazon', logo: '/lovable-uploads/a1e3f2d8-02b0-443d-bc28-77a17c1ba1d5.png' },
-  ];
-
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Searching for:', { searchTerm, jobType, location, salary });
@@ -131,24 +125,6 @@ const Index = () => {
             <div className="w-full lg:w-2/5 hidden md:flex justify-center">
               <img src="/lovable-uploads/791c5abf-a844-481a-b4b0-8248c6f77267.png" alt="Workify Logo" className="h-48 w-48" />
             </div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Featured Companies */}
-      <div className="py-8 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">Featured Companies</h2>
-          <div className="flex flex-wrap justify-center gap-6 mb-8">
-            {featuredCompanies.map((company) => (
-              <div key={company.id} className="p-4 bg-white rounded-lg border border-gray-100 shadow-sm flex flex-col items-center">
-                <img src={company.logo} alt={company.name} className="h-16 w-16 object-contain mb-2" />
-                <h3 className="font-medium">{company.name}</h3>
-                <Link to="/jobs" className="text-sm text-workify-blue hover:underline mt-1">
-                  View Jobs
-                </Link>
-              </div>
-            ))}
           </div>
         </div>
       </div>
@@ -248,14 +224,18 @@ const Index = () => {
                 </div>
                 <div className="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center">
                   <span className="text-workify-blue font-medium">$80-120k/year</span>
-                  <Button variant="outline" size="sm">Apply Now</Button>
+                  <Button variant="outline" size="sm" asChild>
+                    <Link to={`/job-details/${job}`}>Apply Now</Link>
+                  </Button>
                 </div>
               </div>
             ))}
           </div>
           
           <div className="text-center mt-8">
-            <Button className="bg-workify-blue text-white">Load More Jobs</Button>
+            <Button asChild className="bg-workify-blue text-white">
+              <Link to="/jobs">Load More Jobs</Link>
+            </Button>
           </div>
         </div>
       </div>
