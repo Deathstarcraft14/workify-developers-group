@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Briefcase, Mail, GraduationCap, Bell, Search, MapPin, Filter, ChevronDown } from 'lucide-react';
@@ -28,8 +29,7 @@ const Index = () => {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       
-      <div className="header-section" 
-           style={{backgroundImage: `linear-gradient(to right, rgba(248, 250, 252, 0.85), rgba(241, 245, 249, 0.85)), url(${images.heroBackground})`}}>
+      <div className="header-section">
         <div className="container mx-auto px-4 py-12 md:py-20">
           <div className="flex flex-wrap items-center">
             <div className="w-full lg:w-3/5 mb-8 lg:mb-0">
@@ -39,7 +39,7 @@ const Index = () => {
               </h1>
               <p className="welcome-subheading text-xl mb-8">Where Job Hunting is Easier</p>
               
-              <div className="bg-white p-4 rounded-xl shadow-sm">
+              <div className="bg-white p-4 rounded-xl shadow-sm bg-opacity-90">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div className="relative">
                     <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
