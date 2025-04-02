@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input';
 
 const Index = () => {
   const images = {
-    heroBackground: '/lovable-uploads/a1e3f2d8-02b0-443d-bc28-77a17c1ba1d5.png',
+    heroBackground: '/lovable-uploads/3b921527-efc7-46ce-b862-9e3295dde2ef.png',
     companyLogos: ['/assets/company-logo-1.png', '/assets/company-logo-2.png', '/assets/company-logo-3.png'],
     featureIcons: {
       browse: '/assets/feature-browse.png',

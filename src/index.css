@@ -151,7 +151,7 @@
 
 .header-section {
   @apply relative overflow-hidden bg-slate-100 py-10 md:py-16;
-  background-image: linear-gradient(to right, rgba(248, 250, 252, 0.95), rgba(241, 245, 249, 0.9)), url('/lovable-uploads/bcef0a86-ce9e-4181-8f07-1546a6f54a9d.png');
+  background-image: linear-gradient(to right, rgba(248, 250, 252, 0.95), rgba(241, 245, 249, 0.9)), url('/lovable-uploads/3b921527-efc7-46ce-b862-9e3295dde2ef.png');
   background-size: cover;
   background-position: center;
 }
