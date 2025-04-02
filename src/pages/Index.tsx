@@ -9,22 +9,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 const Index = () => {
-  const images = {
-    heroBackground: '/lovable-uploads/3b921527-efc7-46ce-b862-9e3295dde2ef.png',
-    companyLogos: ['/assets/company-logo-1.png', '/assets/company-logo-2.png', '/assets/company-logo-3.png'],
-    featureIcons: {
-      browse: '/assets/feature-browse.png',
-      apply: '/assets/feature-apply.png',
-      resume: '/assets/feature-resume.png',
-      alerts: '/assets/feature-alerts.png'
-    },
-    statIcons: {
-      jobs: '/assets/stat-jobs.png',
-      companies: '/assets/stat-companies.png',
-      applications: '/assets/stat-applications.png'
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
@@ -32,49 +16,19 @@ const Index = () => {
       <div className="header-section">
         <div className="container mx-auto px-4 py-12 md:py-20">
           <div className="flex flex-wrap items-center">
-            <div className="w-full lg:w-3/5 mb-8 lg:mb-0">
-              <h1 className="welcome-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+            <div className="w-full lg:w-3/5">
+              <h1 className="welcome-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-2">
                 <span>Welcome to </span>
                 <span className="highlight">Workify</span>
               </h1>
-              <p className="welcome-subheading text-xl mb-8">Where Job Hunting is Easier</p>
+              <p className="welcome-subheading text-xl mb-6">Where Job Hunting is Easier</p>
               
-              <div className="bg-white p-4 rounded-xl shadow-sm bg-opacity-90">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <Search className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <Input placeholder="Job title or keyword" className="pl-10" />
-                  </div>
-                  
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                      <MapPin className="h-5 w-5 text-gray-400" />
-                    </div>
-                    <Input placeholder="Location" className="pl-10" />
-                  </div>
-                  
-                  <Button className="bg-workify-blue text-white">Search Jobs</Button>
-                </div>
-                
-                <div className="flex items-center mt-4 text-sm">
-                  <Button variant="ghost" size="sm" className="text-gray-500 px-0 flex items-center">
-                    <Filter className="h-4 w-4 mr-1" />
-                    Filters
-                    <ChevronDown className="h-4 w-4 ml-1" />
-                  </Button>
-                  <div className="text-gray-400 mx-2">Popular:</div>
-                  <div className="flex flex-wrap">
-                    <Button variant="outline" size="sm" className="text-xs mr-2 mb-1">Remote</Button>
-                    <Button variant="outline" size="sm" className="text-xs mr-2 mb-1">Full-time</Button>
-                    <Button variant="outline" size="sm" className="text-xs mr-2 mb-1">Engineering</Button>
-                  </div>
-                </div>
+              <div className="mt-6 md:mt-12 md:hidden">
+                <img src="/lovable-uploads/791c5abf-a844-481a-b4b0-8248c6f77267.png" alt="Workify Logo" className="h-32 w-32 mx-auto" />
               </div>
             </div>
             
-            <div className="w-full lg:w-2/5 flex justify-center">
+            <div className="w-full lg:w-2/5 hidden md:flex justify-center">
               <img src="/lovable-uploads/791c5abf-a844-481a-b4b0-8248c6f77267.png" alt="Workify Logo" className="h-48 w-48" />
             </div>
           </div>
@@ -82,23 +36,13 @@ const Index = () => {
       </div>
       
       <div className="py-8 bg-white">
-        <div className="container mx-auto">
-          <div className="flex flex-wrap justify-between py-4">
-            <StatCounter count="10k +" label="Available jobs" />
-            <StatCounter count="1k +" label="Companies" />
-            <StatCounter count="30" label="Applications in 1 day" />
-          </div>
-        </div>
-      </div>
-      
-      <div className="py-12 px-4 bg-gray-50">
-        <div className="container mx-auto">
-          <h2 className="text-3xl font-bold mb-12 px-4 text-center">Getting Started...</h2>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center">Getting Started...</h2>
+        
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             <Link to="/jobs" className="h-full">
               <FeatureCard
-                icon={<Briefcase size={48} className="text-workify-blue" />}
+                icon={<Briefcase size={48} className="feature-icon" />}
                 title="Browse Jobs"
                 description="Find the perfect role for you"
               />
@@ -106,7 +50,7 @@ const Index = () => {
             
             <Link to="/quick-apply" className="h-full">
               <FeatureCard
-                icon={<Mail size={48} className="text-workify-blue" />}
+                icon={<Mail size={48} className="feature-icon" />}
                 title="Quick Apply"
                 description="Tired of doing the same process over and over?"
               />
@@ -114,7 +58,7 @@ const Index = () => {
             
             <Link to="/resume" className="h-full">
               <FeatureCard
-                icon={<GraduationCap size={48} className="text-workify-blue" />}
+                icon={<GraduationCap size={48} className="feature-icon" />}
                 title="Resume Maker"
                 description="Make the perfect resume"
               />
@@ -122,11 +66,17 @@ const Index = () => {
             
             <Link to="/alerts" className="h-full">
               <FeatureCard
-                icon={<Bell size={48} className="text-workify-blue" />}
+                icon={<Bell size={48} className="feature-icon" />}
                 title="Job Alerts"
                 description="Get notified of all the new job openings!"
               />
             </Link>
+          </div>
+          
+          <div className="stats-container py-6 border-t border-gray-100">
+            <StatCounter count="10k +" label="Available jobs" />
+            <StatCounter count="1k +" label="Companies" />
+            <StatCounter count="30" label="Application in 1 day" />
           </div>
         </div>
       </div>
