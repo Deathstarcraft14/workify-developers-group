@@ -66,7 +66,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .header-section {
   @apply relative overflow-hidden py-10 md:py-16;
-  background-image: linear-gradient(to right, rgba(240, 244, 248, 0.4), rgba(240, 244, 248, 0.4)), url('/lovable-uploads/6706c6ec-b833-4c5e-bae4-54f734c6562a.png');
+  background-image: linear-gradient(to right, rgba(240, 244, 248, 0.2), rgba(240, 244, 248, 0.2)), url('/lovable-uploads/6706c6ec-b833-4c5e-bae4-54f734c6562a.png');
   background-size: cover;
   background-position: center;
 }

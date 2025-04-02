@@ -1,14 +1,50 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Briefcase, Mail, GraduationCap, Bell, Search, MapPin, Filter, ChevronDown } from 'lucide-react';
+import { 
+  Briefcase, 
+  Mail, 
+  GraduationCap, 
+  Bell, 
+  Search, 
+  MapPin, 
+  Filter, 
+  ChevronDown,
+  Building,
+  Calendar
+} from 'lucide-react';
 import Navbar from '../components/Navbar';
 import FeatureCard from '../components/FeatureCard';
 import StatCounter from '../components/StatCounter';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Index = () => {
+  // State for filters
+  const [jobType, setJobType] = useState<string>('');
+  const [location, setLocation] = useState<string>('');
+  const [salary, setSalary] = useState<string>('');
+  const [searchTerm, setSearchTerm] = useState<string>('');
+
+  const featuredCompanies = [
+    { id: 1, name: 'Google', logo: '/lovable-uploads/431ccb7e-e5e8-446e-8ff9-0ba688240e45.png' },
+    { id: 2, name: 'Microsoft', logo: '/lovable-uploads/704f738a-0952-4f67-9f38-34450ef3e395.png' },
+    { id: 3, name: 'Amazon', logo: '/lovable-uploads/a1e3f2d8-02b0-443d-bc28-77a17c1ba1d5.png' },
+  ];
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Searching for:', { searchTerm, jobType, location, salary });
+    // In a real app, this would trigger an API call to search for jobs
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
@@ -23,6 +59,70 @@ const Index = () => {
               </h1>
               <p className="welcome-subheading text-xl mb-6">Where Job Hunting is Easier</p>
               
+              {/* Search form */}
+              <div className="mt-8 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+                <form onSubmit={handleSearch} className="space-y-4 md:space-y-0 md:flex md:space-x-3">
+                  <div className="flex-grow">
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                        <Search className="h-5 w-5 text-gray-400" />
+                      </div>
+                      <Input
+                        type="text"
+                        placeholder="Job title, keyword, or company"
+                        className="pl-10"
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="w-full md:w-48">
+                    <Select value={jobType} onValueChange={setJobType}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Job Type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="full-time">Full Time</SelectItem>
+                        <SelectItem value="part-time">Part Time</SelectItem>
+                        <SelectItem value="contract">Contract</SelectItem>
+                        <SelectItem value="internship">Internship</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="w-full md:w-48">
+                    <Select value={location} onValueChange={setLocation}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Location" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="remote">Remote</SelectItem>
+                        <SelectItem value="new-york">New York</SelectItem>
+                        <SelectItem value="san-francisco">San Francisco</SelectItem>
+                        <SelectItem value="london">London</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div className="w-full md:w-48">
+                    <Select value={salary} onValueChange={setSalary}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Salary Range" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="0-50k">$0 - $50k</SelectItem>
+                        <SelectItem value="50k-100k">$50k - $100k</SelectItem>
+                        <SelectItem value="100k-150k">$100k - $150k</SelectItem>
+                        <SelectItem value="150k+">$150k+</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
+                    <Button type="submit" className="w-full md:w-auto bg-workify-blue hover:bg-blue-700">
+                      Search Jobs
+                    </Button>
+                  </div>
+                </form>
+              </div>
+              
               <div className="mt-6 md:mt-12 md:hidden">
                 <img src="/lovable-uploads/791c5abf-a844-481a-b4b0-8248c6f77267.png" alt="Workify Logo" className="h-32 w-32 mx-auto" />
               </div>
@@ -31,6 +131,24 @@ const Index = () => {
             <div className="w-full lg:w-2/5 hidden md:flex justify-center">
               <img src="/lovable-uploads/791c5abf-a844-481a-b4b0-8248c6f77267.png" alt="Workify Logo" className="h-48 w-48" />
             </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Featured Companies */}
+      <div className="py-8 bg-white">
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-center">Featured Companies</h2>
+          <div className="flex flex-wrap justify-center gap-6 mb-8">
+            {featuredCompanies.map((company) => (
+              <div key={company.id} className="p-4 bg-white rounded-lg border border-gray-100 shadow-sm flex flex-col items-center">
+                <img src={company.logo} alt={company.name} className="h-16 w-16 object-contain mb-2" />
+                <h3 className="font-medium">{company.name}</h3>
+                <Link to="/jobs" className="text-sm text-workify-blue hover:underline mt-1">
+                  View Jobs
+                </Link>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -88,6 +206,30 @@ const Index = () => {
             <Link to="/jobs" className="text-workify-blue hover:underline">View all jobs →</Link>
           </div>
           
+          {/* Filter buttons */}
+          <div className="flex flex-wrap gap-3 mb-6">
+            <Button variant="outline" className="flex items-center gap-1 rounded-full">
+              <Calendar className="h-4 w-4" />
+              <span>Date Posted</span>
+              <ChevronDown className="h-4 w-4" />
+            </Button>
+            <Button variant="outline" className="flex items-center gap-1 rounded-full">
+              <Building className="h-4 w-4" />
+              <span>Company Size</span>
+              <ChevronDown className="h-4 w-4" />
+            </Button>
+            <Button variant="outline" className="flex items-center gap-1 rounded-full">
+              <MapPin className="h-4 w-4" />
+              <span>Location</span>
+              <ChevronDown className="h-4 w-4" />
+            </Button>
+            <Button variant="outline" className="flex items-center gap-1 rounded-full">
+              <Filter className="h-4 w-4" />
+              <span>More Filters</span>
+              <ChevronDown className="h-4 w-4" />
+            </Button>
+          </div>
+          
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3].map((job) => (
               <div key={job} className="job-card">
@@ -125,11 +267,11 @@ const Index = () => {
             Join thousands of job seekers who have found their dream jobs through Workify.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button className="bg-workify-blue text-white px-8 py-6 text-lg">
-              Find Jobs
+            <Button asChild className="bg-workify-blue text-white px-8 py-6 text-lg">
+              <Link to="/jobs">Find Jobs</Link>
             </Button>
-            <Button variant="outline" className="border-workify-blue text-workify-blue px-8 py-6 text-lg">
-              Post a Job
+            <Button variant="outline" asChild className="border-workify-blue text-workify-blue px-8 py-6 text-lg">
+              <Link to="/signup">Post a Job</Link>
             </Button>
           </div>
         </div>
