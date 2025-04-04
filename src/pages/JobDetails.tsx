@@ -1,10 +1,11 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Briefcase, MapPin, Clock, Building, DollarSign, FileText, Share2, Bookmark, ArrowLeft } from 'lucide-react';
 import Navbar from '../components/Navbar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import ApplyJobForm from '@/components/ApplyJobForm';
 
 // Mock job data - in a real app, this would come from an API
 const jobData = {
@@ -55,6 +56,35 @@ const JobDetails = () => {
   // In a real app, we would fetch the job data based on the ID
   // For now, we'll use our mock data
   const job = jobData;
+  
+  const [isApplyFormOpen, setIsApplyFormOpen] = useState(false);
+
+  const handleApply = () => {
+    setIsApplyFormOpen(true);
+  };
+
+  const handleShareJob = () => {
+    // In a real app, this would open a share dialog or copy to clipboard
+    if (navigator.share) {
+      navigator.share({
+        title: `${job.title} at ${job.company}`,
+        text: `Check out this job: ${job.title} at ${job.company}`,
+        url: window.location.href,
+      }).catch(err => {
+        console.error('Error sharing:', err);
+      });
+    } else {
+      // Fallback: copy to clipboard
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard');
+    }
+  };
+
+  const handleSaveJob = () => {
+    // In a real app, this would save the job to user's saved jobs
+    console.log('Job saved:', job.id);
+    alert('Job saved to your favorites');
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -146,16 +176,16 @@ const JobDetails = () => {
                 </div>
                 
                 <div className="space-y-3">
-                  <Button className="w-full bg-workify-blue">
+                  <Button className="w-full bg-workify-blue" onClick={handleApply}>
                     Apply Now
                   </Button>
                   
                   <div className="flex space-x-2">
-                    <Button variant="outline" className="flex-1">
+                    <Button variant="outline" className="flex-1" onClick={handleSaveJob}>
                       <Bookmark className="h-4 w-4 mr-2" />
                       Save
                     </Button>
-                    <Button variant="outline" className="flex-1">
+                    <Button variant="outline" className="flex-1" onClick={handleShareJob}>
                       <Share2 className="h-4 w-4 mr-2" />
                       Share
                     </Button>
@@ -173,6 +203,13 @@ const JobDetails = () => {
           </div>
         </div>
       </div>
+      
+      <ApplyJobForm
+        isOpen={isApplyFormOpen}
+        onClose={() => setIsApplyFormOpen(false)}
+        jobTitle={job.title}
+        company={job.company}
+      />
     </div>
   );
 };
