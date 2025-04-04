@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import Navbar from '../components/Navbar';
 import PageHeader from '../components/PageHeader';
 import ResumeBuilder from '../components/resume/ResumeBuilder';
