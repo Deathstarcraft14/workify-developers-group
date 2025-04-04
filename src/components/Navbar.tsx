@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { ChevronDown, Search, User, LogOut, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { 
@@ -15,6 +15,7 @@ import { useAuth } from '../context/AuthContext';
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const { user, isAuthenticated, logout } = useAuth();
 
   const handleLogout = () => {
@@ -24,6 +25,11 @@ const Navbar = () => {
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  // Check if a path is active
+  const isActive = (path: string) => {
+    return location.pathname === path;
   };
 
   return (
@@ -48,17 +54,35 @@ const Navbar = () => {
             </Link>
             
             <div className="hidden md:flex md:ml-6 space-x-8">
-              <Link to="/" className="text-gray-700 hover:text-workify-blue hover:border-workify-blue inline-flex items-center px-1 pt-1 border-b-2 border-transparent">
+              <Link 
+                to="/" 
+                className={`${isActive('/') ? 'text-workify-blue border-workify-blue' : 'text-gray-700 border-transparent'} hover:text-workify-blue hover:border-workify-blue inline-flex items-center px-1 pt-1 border-b-2`}
+              >
                 Home
               </Link>
-              <Link to="/applications" className="text-gray-700 hover:text-workify-blue hover:border-workify-blue inline-flex items-center px-1 pt-1 border-b-2 border-transparent">
-                Application
+              <Link 
+                to="/applications" 
+                className={`${isActive('/applications') ? 'text-workify-blue border-workify-blue' : 'text-gray-700 border-transparent'} hover:text-workify-blue hover:border-workify-blue inline-flex items-center px-1 pt-1 border-b-2`}
+              >
+                Applications
               </Link>
-              <Link to="/messages" className="text-gray-700 hover:text-workify-blue hover:border-workify-blue inline-flex items-center px-1 pt-1 border-b-2 border-transparent">
+              <Link 
+                to="/messages" 
+                className={`${isActive('/messages') ? 'text-workify-blue border-workify-blue' : 'text-gray-700 border-transparent'} hover:text-workify-blue hover:border-workify-blue inline-flex items-center px-1 pt-1 border-b-2`}
+              >
                 Messages
               </Link>
-              <Link to="/jobs" className="text-gray-700 hover:text-workify-blue hover:border-workify-blue inline-flex items-center px-1 pt-1 border-b-2 border-transparent">
+              <Link 
+                to="/jobs" 
+                className={`${isActive('/jobs') ? 'text-workify-blue border-workify-blue' : 'text-gray-700 border-transparent'} hover:text-workify-blue hover:border-workify-blue inline-flex items-center px-1 pt-1 border-b-2`}
+              >
                 Job opportunities
+              </Link>
+              <Link 
+                to="/resume" 
+                className={`${isActive('/resume') ? 'text-workify-blue border-workify-blue' : 'text-gray-700 border-transparent'} hover:text-workify-blue hover:border-workify-blue inline-flex items-center px-1 pt-1 border-b-2`}
+              >
+                Resume
               </Link>
             </div>
           </div>
@@ -103,6 +127,11 @@ const Navbar = () => {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem asChild>
+                      <Link to="/resume" className="w-full">
+                        Resume
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
                       <Link to="/settings" className="w-full">
                         Settings
                       </Link>
@@ -138,31 +167,38 @@ const Navbar = () => {
           <div className="pt-2 pb-3 space-y-1">
             <Link 
               to="/"
-              className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-workify-blue hover:text-workify-blue"
+              className={`${isActive('/') ? 'bg-gray-50 border-workify-blue text-workify-blue' : 'border-transparent text-gray-700'} block pl-3 pr-4 py-2 border-l-4 text-base font-medium hover:bg-gray-50 hover:border-workify-blue hover:text-workify-blue`}
               onClick={() => setMobileMenuOpen(false)}
             >
               Home
             </Link>
             <Link 
               to="/applications"
-              className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-workify-blue hover:text-workify-blue"
+              className={`${isActive('/applications') ? 'bg-gray-50 border-workify-blue text-workify-blue' : 'border-transparent text-gray-700'} block pl-3 pr-4 py-2 border-l-4 text-base font-medium hover:bg-gray-50 hover:border-workify-blue hover:text-workify-blue`}
               onClick={() => setMobileMenuOpen(false)}
             >
-              Application
+              Applications
             </Link>
             <Link 
               to="/messages"
-              className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-workify-blue hover:text-workify-blue"
+              className={`${isActive('/messages') ? 'bg-gray-50 border-workify-blue text-workify-blue' : 'border-transparent text-gray-700'} block pl-3 pr-4 py-2 border-l-4 text-base font-medium hover:bg-gray-50 hover:border-workify-blue hover:text-workify-blue`}
               onClick={() => setMobileMenuOpen(false)}
             >
               Messages
             </Link>
             <Link 
               to="/jobs"
-              className="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-700 hover:bg-gray-50 hover:border-workify-blue hover:text-workify-blue"
+              className={`${isActive('/jobs') ? 'bg-gray-50 border-workify-blue text-workify-blue' : 'border-transparent text-gray-700'} block pl-3 pr-4 py-2 border-l-4 text-base font-medium hover:bg-gray-50 hover:border-workify-blue hover:text-workify-blue`}
               onClick={() => setMobileMenuOpen(false)}
             >
               Job opportunities
+            </Link>
+            <Link 
+              to="/resume"
+              className={`${isActive('/resume') ? 'bg-gray-50 border-workify-blue text-workify-blue' : 'border-transparent text-gray-700'} block pl-3 pr-4 py-2 border-l-4 text-base font-medium hover:bg-gray-50 hover:border-workify-blue hover:text-workify-blue`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Resume
             </Link>
           </div>
           
