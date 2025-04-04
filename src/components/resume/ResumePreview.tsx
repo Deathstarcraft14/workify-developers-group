@@ -31,52 +31,56 @@ const ResumePreview = () => {
       // Header - Name and Contact
       doc.setFontSize(24);
       doc.setFont('helvetica', 'bold');
-      doc.text(resumeData.firstName + ' ' + resumeData.lastName, margins.left, margins.top);
+      doc.text(resumeData.contact.fullName, margins.left, margins.top);
       
       doc.setFontSize(10);
       doc.setFont('helvetica', 'normal');
       const contactText = [
-        resumeData.email,
-        resumeData.phone,
-        resumeData.location
+        resumeData.contact.email,
+        resumeData.contact.phone,
+        resumeData.contact.location
       ].filter(Boolean).join(' • ');
       doc.text(contactText, margins.left, margins.top + 10);
       
       // Summary
+      let currentY = margins.top + 20;
+      
       if (resumeData.summary) {
         doc.setFontSize(14);
         doc.setFont('helvetica', 'bold');
-        doc.text('SUMMARY', margins.left, margins.top + 20);
+        doc.text('SUMMARY', margins.left, currentY);
         
         doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
         const summaryLines = doc.splitTextToSize(resumeData.summary, 170);
-        doc.text(summaryLines, margins.left, margins.top + 25);
+        doc.text(summaryLines, margins.left, currentY + 5);
+        
+        currentY += 15 + (summaryLines.length * 5);
       }
       
       // Experience
-      if (resumeData.experience && resumeData.experience.length > 0) {
+      if (resumeData.experiences && resumeData.experiences.length > 0) {
         doc.setFontSize(14);
         doc.setFont('helvetica', 'bold');
-        doc.text('EXPERIENCE', margins.left, margins.top + 45);
+        doc.text('EXPERIENCE', margins.left, currentY);
         
-        let yPosition = margins.top + 50;
+        currentY += 5;
         
-        resumeData.experience.forEach((exp) => {
+        resumeData.experiences.forEach((exp) => {
           doc.setFontSize(12);
           doc.setFont('helvetica', 'bold');
-          doc.text(exp.title, margins.left, yPosition);
+          doc.text(exp.position, margins.left, currentY);
           
           doc.setFontSize(10);
           doc.setFont('helvetica', 'italic');
           const companyText = `${exp.company} • ${exp.startDate} - ${exp.endDate || 'Present'}`;
-          doc.text(companyText, margins.left, yPosition + 5);
+          doc.text(companyText, margins.left, currentY + 5);
           
           doc.setFont('helvetica', 'normal');
           const descriptionLines = doc.splitTextToSize(exp.description, 170);
-          doc.text(descriptionLines, margins.left, yPosition + 10);
+          doc.text(descriptionLines, margins.left, currentY + 10);
           
-          yPosition += 20 + (descriptionLines.length * 5);
+          currentY += 20 + (descriptionLines.length * 5);
         });
       }
       
@@ -84,21 +88,21 @@ const ResumePreview = () => {
       if (resumeData.education && resumeData.education.length > 0) {
         doc.setFontSize(14);
         doc.setFont('helvetica', 'bold');
-        doc.text('EDUCATION', margins.left, yPosition);
+        doc.text('EDUCATION', margins.left, currentY);
         
-        yPosition += 5;
+        currentY += 5;
         
         resumeData.education.forEach((edu) => {
           doc.setFontSize(12);
           doc.setFont('helvetica', 'bold');
-          doc.text(edu.degree, margins.left, yPosition);
+          doc.text(edu.degree, margins.left, currentY);
           
           doc.setFontSize(10);
           doc.setFont('helvetica', 'italic');
           const schoolText = `${edu.school} • ${edu.startDate} - ${edu.endDate || 'Present'}`;
-          doc.text(schoolText, margins.left, yPosition + 5);
+          doc.text(schoolText, margins.left, currentY + 5);
           
-          yPosition += 15;
+          currentY += 15;
         });
       }
       
@@ -106,17 +110,21 @@ const ResumePreview = () => {
       if (resumeData.skills && resumeData.skills.length > 0) {
         doc.setFontSize(14);
         doc.setFont('helvetica', 'bold');
-        doc.text('SKILLS', margins.left, yPosition);
+        doc.text('SKILLS', margins.left, currentY);
         
         doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
-        const skillsText = resumeData.skills.join(', ');
+        const skillsText = resumeData.skills.map(skill => skill.name).join(', ');
         const skillsLines = doc.splitTextToSize(skillsText, 170);
-        doc.text(skillsLines, margins.left, yPosition + 5);
+        doc.text(skillsLines, margins.left, currentY + 5);
       }
 
       // Save the PDF
-      doc.save(`${resumeData.firstName}_${resumeData.lastName}_Resume.pdf`);
+      const fileName = resumeData.contact.fullName 
+        ? resumeData.contact.fullName.replace(/\s+/g, '_') + '_Resume.pdf'
+        : 'resume.pdf';
+      
+      doc.save(fileName);
 
       toast({
         title: "Success!",
@@ -169,12 +177,12 @@ const ResumePreview = () => {
         {/* Header */}
         <div className="mb-6">
           <h1 className="text-2xl font-bold">
-            {resumeData.firstName} {resumeData.lastName}
+            {resumeData.contact.fullName}
           </h1>
           <div className="text-sm text-gray-600 mt-1">
-            {resumeData.email && <span className="mr-2">{resumeData.email}</span>}
-            {resumeData.phone && <span className="mr-2">• {resumeData.phone}</span>}
-            {resumeData.location && <span>• {resumeData.location}</span>}
+            {resumeData.contact.email && <span className="mr-2">{resumeData.contact.email}</span>}
+            {resumeData.contact.phone && <span className="mr-2">• {resumeData.contact.phone}</span>}
+            {resumeData.contact.location && <span>• {resumeData.contact.location}</span>}
           </div>
         </div>
         
@@ -187,13 +195,13 @@ const ResumePreview = () => {
         )}
         
         {/* Experience */}
-        {resumeData.experience && resumeData.experience.length > 0 && (
+        {resumeData.experiences && resumeData.experiences.length > 0 && (
           <div className="mb-6">
             <h2 className="text-lg font-semibold border-b pb-1 mb-2">EXPERIENCE</h2>
-            {resumeData.experience.map((exp, index) => (
+            {resumeData.experiences.map((exp, index) => (
               <div key={index} className="mb-4">
                 <div className="flex justify-between">
-                  <h3 className="font-medium">{exp.title}</h3>
+                  <h3 className="font-medium">{exp.position}</h3>
                   <span className="text-sm text-gray-600">
                     {exp.startDate} - {exp.endDate || 'Present'}
                   </span>
@@ -230,7 +238,7 @@ const ResumePreview = () => {
             <div className="flex flex-wrap gap-2">
               {resumeData.skills.map((skill, index) => (
                 <span key={index} className="bg-gray-100 px-2 py-1 text-sm rounded">
-                  {skill}
+                  {skill.name}
                 </span>
               ))}
             </div>
