@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import Applications from "./pages/Applications";
 import Messages from "./pages/Messages";
+import Resume from "./pages/Resume";
 
 // Add CSS variables for the Workify theme colors
 import "./styles.css";
@@ -40,6 +41,7 @@ const App = () => (
             <Route path="/profile" element={<Profile />} />
             <Route path="/applications" element={<Applications />} />
             <Route path="/messages" element={<Messages />} />
+            <Route path="/resume" element={<Resume />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
