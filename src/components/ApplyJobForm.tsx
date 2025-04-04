@@ -12,12 +12,12 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { toast } from 'sonner';
+import { FileText } from 'lucide-react';
 
 interface ApplyJobFormProps {
   isOpen: boolean;
@@ -32,6 +32,7 @@ const formSchema = z.object({
   phone: z.string().min(10, "Please enter a valid phone number"),
   experience: z.string().min(1, "Please describe your experience"),
   coverLetter: z.string().optional(),
+  resume: z.instanceof(File).optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -39,6 +40,7 @@ type FormValues = z.infer<typeof formSchema>;
 const ApplyJobForm: React.FC<ApplyJobFormProps> = ({ isOpen, onClose, jobTitle, company }) => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -51,12 +53,26 @@ const ApplyJobForm: React.FC<ApplyJobFormProps> = ({ isOpen, onClose, jobTitle, 
     },
   });
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setSelectedFile(file);
+      form.setValue('resume', file);
+    }
+  };
+
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
     
     try {
+      // Add the selected file to the data if it exists
+      const formData = {
+        ...data,
+        resumeFileName: selectedFile ? selectedFile.name : undefined
+      };
+      
       // In a real app, we would submit to an API here
-      console.log('Application data:', data);
+      console.log('Application data:', formData);
       
       // Simulate API call delay
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -165,6 +181,41 @@ const ApplyJobForm: React.FC<ApplyJobFormProps> = ({ isOpen, onClose, jobTitle, 
                 </FormItem>
               )}
             />
+            
+            <div className="border border-dashed border-gray-300 rounded-lg p-6 text-center">
+              <input
+                type="file"
+                id="resume"
+                accept=".pdf,.doc,.docx"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+              <label 
+                htmlFor="resume" 
+                className="cursor-pointer flex flex-col items-center justify-center gap-2"
+              >
+                <FileText className="h-8 w-8 text-gray-400" />
+                <span className="text-sm font-medium">
+                  {selectedFile ? selectedFile.name : "Upload Resume (Optional)"}
+                </span>
+                <span className="text-xs text-gray-500">
+                  {!selectedFile && "PDF, DOC, DOCX up to 5MB"}
+                </span>
+              </label>
+              {selectedFile && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="mt-2 h-auto p-1 text-xs"
+                  onClick={() => {
+                    setSelectedFile(null);
+                    form.setValue('resume', undefined);
+                  }}
+                >
+                  Remove
+                </Button>
+              )}
+            </div>
             
             <DialogFooter className="pt-4">
               <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
