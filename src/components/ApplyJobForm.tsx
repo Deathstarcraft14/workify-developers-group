@@ -98,7 +98,7 @@ const ApplyJobForm: React.FC<ApplyJobFormProps> = ({ isOpen, onClose, jobTitle, 
                 <Textarea placeholder="Tell us why you're a good fit for this position" rows={5} />
               </FormFieldWrapper>
               
-              <ResumeUpload form={form} />
+              <ResumeUpload setValue={form.setValue} />
               
               <ApplyFormActions 
                 onClose={handleClose} 
