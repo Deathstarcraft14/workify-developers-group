@@ -11,10 +11,18 @@ const JobDescription: React.FC<JobDescriptionProps> = ({ description }) => {
   // Function to process the description HTML and enhance section formatting
   const enhanceDescriptionSections = (html: string) => {
     // Add custom classes to section headings (h4 tags)
-    return html.replace(
+    let enhancedHtml = html.replace(
       /<h4>(.*?)<\/h4>/g, 
       '<h4 class="text-lg font-semibold text-primary mt-6 mb-3">$1</h4>'
     );
+    
+    // Add a subtle left border to lists for better visual hierarchy
+    enhancedHtml = enhancedHtml.replace(
+      /<ul>/g,
+      '<ul class="border-l-2 border-gray-100 pl-4">'
+    );
+    
+    return enhancedHtml;
   };
 
   const enhancedDescription = enhanceDescriptionSections(description);
@@ -42,6 +50,19 @@ const JobDescription: React.FC<JobDescriptionProps> = ({ description }) => {
             .prose p {
               margin-bottom: 1rem;
               line-height: 1.6;
+            }
+            .prose h4 {
+              position: relative;
+              padding-bottom: 0.5rem;
+            }
+            .prose h4:after {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 40px;
+              height: 2px;
+              background-color: #e5e7eb;
             }
           `}
         </style>

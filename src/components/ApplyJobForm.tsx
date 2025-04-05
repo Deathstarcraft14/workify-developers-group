@@ -1,25 +1,16 @@
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { 
-  Dialog, 
-  DialogContent, 
-  DialogHeader, 
-  DialogTitle,
-  DialogDescription,
-} from '@/components/ui/dialog';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Form } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Form } from '@/components/ui/form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
-import { toast } from 'sonner';
-
-// Import the new components
-import FormFieldWrapper from './apply/FormFieldWrapper';
-import ResumeUpload from './apply/ResumeUpload';
-import ApplyFormActions from './apply/ApplyFormActions';
+import ResumeUpload from '@/components/apply/ResumeUpload';
+import FormFieldWrapper from '@/components/apply/FormFieldWrapper';
+import ApplyFormActions from '@/components/apply/ApplyFormActions';
+import ApplicationSuccess from '@/components/apply/ApplicationSuccess';
 
 interface ApplyJobFormProps {
   isOpen: boolean;
@@ -28,28 +19,27 @@ interface ApplyJobFormProps {
   company: string;
 }
 
+// Form schema for validation
 const formSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email"),
-  phone: z.string().min(10, "Please enter a valid phone number"),
-  experience: z.string().min(1, "Please describe your experience"),
+  fullName: z.string().min(3, { message: 'Full name is required' }),
+  email: z.string().email({ message: 'Invalid email address' }),
+  phone: z.string().min(5, { message: 'Phone number is required' }),
   coverLetter: z.string().optional(),
-  resume: z.instanceof(File).optional(),
+  resume: z.any().optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
 const ApplyJobForm: React.FC<ApplyJobFormProps> = ({ isOpen, onClose, jobTitle, company }) => {
-  const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
+      fullName: '',
       email: '',
       phone: '',
-      experience: '',
       coverLetter: '',
     },
   });
@@ -57,97 +47,67 @@ const ApplyJobForm: React.FC<ApplyJobFormProps> = ({ isOpen, onClose, jobTitle, 
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true);
     
-    try {
-      // Add the selected file name to the data if it exists
-      const formData = {
-        ...data,
-        resumeFileName: data.resume ? data.resume.name : undefined
-      };
-      
-      // In a real app, we would submit to an API here
-      console.log('Application data:', formData);
-      
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast.success("Application submitted successfully!");
+    // Simulate API call
+    setTimeout(() => {
+      console.log('Submitted application:', data);
       setIsSubmitting(false);
+      setIsSuccess(true);
+    }, 1500);
+  };
+
+  const handleClose = () => {
+    if (!isSubmitting) {
       onClose();
-      
-      // Navigate to applications page after successful submission
-      navigate('/applications');
-    } catch (error) {
-      console.error('Error submitting application:', error);
-      toast.error("Failed to submit application. Please try again.");
-      setIsSubmitting(false);
+      // Reset form state after dialog closes
+      setTimeout(() => {
+        if (isSuccess) {
+          setIsSuccess(false);
+          form.reset();
+        }
+      }, 300);
     }
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-md md:max-w-2xl">
+    <Dialog open={isOpen} onOpenChange={handleClose}>
+      <DialogContent className="sm:max-w-md md:max-w-lg">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold">Apply for {jobTitle}</DialogTitle>
-          <DialogDescription>
-            Submit your application to {company}
-          </DialogDescription>
+          <DialogTitle>
+            {isSuccess ? 'Application Submitted' : `Apply for ${jobTitle}`}
+          </DialogTitle>
         </DialogHeader>
         
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <FormFieldWrapper 
-              name="name" 
-              label="Full Name" 
-              control={form.control}
-            >
-              <Input placeholder="Your full name" />
-            </FormFieldWrapper>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormFieldWrapper 
-                name="email" 
-                label="Email" 
-                control={form.control}
-              >
-                <Input placeholder="Your email address" type="email" />
+        {isSuccess ? (
+          <ApplicationSuccess jobTitle={jobTitle} company={company} />
+        ) : (
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <FormFieldWrapper name="fullName" label="Full Name" control={form.control}>
+                <Input placeholder="Your full name" />
               </FormFieldWrapper>
               
-              <FormFieldWrapper 
-                name="phone" 
-                label="Phone Number" 
-                control={form.control}
-              >
+              <FormFieldWrapper name="email" label="Email" control={form.control}>
+                <Input placeholder="you@example.com" />
+              </FormFieldWrapper>
+              
+              <FormFieldWrapper name="phone" label="Phone" control={form.control}>
                 <Input placeholder="Your phone number" />
               </FormFieldWrapper>
-            </div>
-            
-            <FormFieldWrapper 
-              name="experience" 
-              label="Relevant Experience" 
-              control={form.control}
-            >
-              <Textarea 
-                placeholder="Briefly describe your relevant experience for this position"
-                className="min-h-[100px]"
+              
+              <FormFieldWrapper name="coverLetter" label="Cover Letter (optional)" control={form.control}>
+                <Textarea placeholder="Tell us why you're a good fit for this position" rows={5} />
+              </FormFieldWrapper>
+              
+              <ResumeUpload form={form} />
+              
+              <ApplyFormActions 
+                onClose={handleClose} 
+                isSubmitting={isSubmitting} 
+                isSuccess={isSuccess}
               />
-            </FormFieldWrapper>
-            
-            <FormFieldWrapper 
-              name="coverLetter" 
-              label="Cover Letter (Optional)" 
-              control={form.control}
-            >
-              <Textarea 
-                placeholder="Why are you interested in this position?"
-                className="min-h-[150px]"
-              />
-            </FormFieldWrapper>
-            
-            <ResumeUpload setValue={form.setValue} />
-            
-            <ApplyFormActions onClose={onClose} isSubmitting={isSubmitting} />
-          </form>
-        </Form>
+            </form>
+          </Form>
+        )}
       </DialogContent>
     </Dialog>
   );

@@ -6,17 +6,24 @@ import { DialogFooter } from '@/components/ui/dialog';
 interface ApplyFormActionsProps {
   onClose: () => void;
   isSubmitting: boolean;
+  isSuccess?: boolean;
 }
 
-const ApplyFormActions: React.FC<ApplyFormActionsProps> = ({ onClose, isSubmitting }) => {
+const ApplyFormActions: React.FC<ApplyFormActionsProps> = ({ 
+  onClose, 
+  isSubmitting,
+  isSuccess = false
+}) => {
   return (
     <DialogFooter className="pt-4">
       <Button type="button" variant="outline" onClick={onClose} disabled={isSubmitting}>
-        Cancel
+        {isSuccess ? 'Close' : 'Cancel'}
       </Button>
-      <Button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? 'Submitting...' : 'Submit Application'}
-      </Button>
+      {!isSuccess && (
+        <Button type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Submitting...' : 'Submit Application'}
+        </Button>
+      )}
     </DialogFooter>
   );
 };

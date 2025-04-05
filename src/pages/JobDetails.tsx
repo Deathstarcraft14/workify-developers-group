@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
@@ -8,6 +7,8 @@ import JobDetailsHeader from '@/components/jobs/JobDetailsHeader';
 import JobDescription from '@/components/jobs/JobDescription';
 import JobOverview from '@/components/jobs/JobOverview';
 import JobActionButtons from '@/components/jobs/JobActionButtons';
+import SimilarJobs from '@/components/jobs/SimilarJobs';
+import PrintJobDescription from '@/components/jobs/PrintJobDescription';
 
 // Mock job data - in a real app, this would come from an API
 const jobData = {
@@ -101,17 +102,36 @@ const JobDetails = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Job Details Column */}
           <div className="lg:col-span-2">
-            <JobDetailsHeader
-              title={job.title}
-              company={job.company}
-              location={job.location}
-              postedDate={job.postedDate}
-              employmentType={job.employmentType}
-              skills={job.skills}
-              companyLogo={job.companyLogo}
-            />
+            <div className="flex justify-between items-start mb-4">
+              <JobDetailsHeader
+                title={job.title}
+                company={job.company}
+                location={job.location}
+                postedDate={job.postedDate}
+                employmentType={job.employmentType}
+                skills={job.skills}
+                companyLogo={job.companyLogo}
+              />
+              <div className="hidden md:block">
+                <PrintJobDescription 
+                  jobTitle={job.title} 
+                  company={job.company}
+                />
+              </div>
+            </div>
             
-            <JobDescription description={job.description} />
+            <div id="job-description-container">
+              <JobDescription description={job.description} />
+            </div>
+            
+            <div className="md:hidden mt-4 mb-6">
+              <PrintJobDescription 
+                jobTitle={job.title} 
+                company={job.company}
+              />
+            </div>
+            
+            <SimilarJobs currentJobId={job.id} />
           </div>
           
           {/* Apply Column */}
