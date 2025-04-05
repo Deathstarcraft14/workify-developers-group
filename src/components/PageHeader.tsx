@@ -5,18 +5,19 @@ interface PageHeaderProps {
   title: string;
   subtitle: string;
   backgroundImage?: string;
+  children?: React.ReactNode;
 }
 
-const PageHeader: React.FC<PageHeaderProps> = ({ title, subtitle, backgroundImage }) => {
+const PageHeader: React.FC<PageHeaderProps> = ({ title, subtitle, backgroundImage, children }) => {
   const style = backgroundImage ? {
-    backgroundImage: `linear-gradient(to right, rgba(248, 250, 252, 0.95), rgba(241, 245, 249, 0.9)), url(${backgroundImage})`,
+    backgroundImage: `linear-gradient(to right, rgba(248, 250, 252, 0.8), rgba(241, 245, 249, 0.75)), url(${backgroundImage})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
   } : {};
 
   return (
     <div className="header-section" style={style}>
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-8 md:py-12">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
             <span className="text-gray-900">
@@ -29,6 +30,8 @@ const PageHeader: React.FC<PageHeaderProps> = ({ title, subtitle, backgroundImag
             </span>
           </h1>
           <p className="text-xl text-gray-600">{subtitle}</p>
+          
+          {children}
         </div>
       </div>
     </div>

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -16,6 +15,7 @@ import {
 import Navbar from '../components/Navbar';
 import FeatureCard from '../components/FeatureCard';
 import StatCounter from '../components/StatCounter';
+import PageHeader from '../components/PageHeader';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { 
@@ -43,91 +43,78 @@ const Index = () => {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       
-      <div className="header-section">
-        <div className="container mx-auto px-4 py-12 md:py-20">
-          <div className="flex flex-wrap items-center">
-            <div className="w-full lg:w-3/5">
-              <h1 className="welcome-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-2">
-                <span>Welcome to </span>
-                <span className="highlight">Workify</span>
-              </h1>
-              <p className="welcome-subheading text-xl mb-6">Where Job Hunting is Easier</p>
-              
-              {/* Search form */}
-              <div className="mt-8 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg">
-                <form onSubmit={handleSearch} className="space-y-4 md:space-y-0 md:flex md:space-x-3">
-                  <div className="flex-grow">
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
-                        <Search className="h-5 w-5 text-gray-400" />
-                      </div>
-                      <Input
-                        type="text"
-                        placeholder="Job title, keyword, or company"
-                        className="pl-10"
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                      />
-                    </div>
-                  </div>
-                  <div className="w-full md:w-48">
-                    <Select value={jobType} onValueChange={setJobType}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Job Type" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="full-time">Full Time</SelectItem>
-                        <SelectItem value="part-time">Part Time</SelectItem>
-                        <SelectItem value="contract">Contract</SelectItem>
-                        <SelectItem value="internship">Internship</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="w-full md:w-48">
-                    <Select value={location} onValueChange={setLocation}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Location" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="remote">Remote</SelectItem>
-                        <SelectItem value="new-york">New York</SelectItem>
-                        <SelectItem value="san-francisco">San Francisco</SelectItem>
-                        <SelectItem value="london">London</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="w-full md:w-48">
-                    <Select value={salary} onValueChange={setSalary}>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Salary Range" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="0-50k">$0 - $50k</SelectItem>
-                        <SelectItem value="50k-100k">$50k - $100k</SelectItem>
-                        <SelectItem value="100k-150k">$100k - $150k</SelectItem>
-                        <SelectItem value="150k+">$150k+</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div>
-                    <Button type="submit" className="w-full md:w-auto bg-workify-blue hover:bg-blue-700">
-                      Search Jobs
-                    </Button>
-                  </div>
-                </form>
-              </div>
-              
-              <div className="mt-6 md:mt-12 md:hidden">
-                <img src="/lovable-uploads/791c5abf-a844-481a-b4b0-8248c6f77267.png" alt="Workify Logo" className="h-32 w-32 mx-auto" />
+      <PageHeader 
+        title="Welcome to Workify" 
+        subtitle="Where Job Hunting is Easier"
+        backgroundImage="/lovable-uploads/6706c6ec-b833-4c5e-bae4-54f734c6562a.png"
+      >
+        <div className="mt-8 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg">
+          <form onSubmit={handleSearch} className="space-y-4 md:space-y-0 md:flex md:space-x-3">
+            <div className="flex-grow">
+              <div className="relative">
+                <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+                  <Search className="h-5 w-5 text-gray-400" />
+                </div>
+                <Input
+                  type="text"
+                  placeholder="Job title, keyword, or company"
+                  className="pl-10"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
               </div>
             </div>
-            
-            <div className="w-full lg:w-2/5 hidden md:flex justify-center">
-              <img src="/lovable-uploads/791c5abf-a844-481a-b4b0-8248c6f77267.png" alt="Workify Logo" className="h-48 w-48" />
+            <div className="w-full md:w-48">
+              <Select value={jobType} onValueChange={setJobType}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Job Type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="full-time">Full Time</SelectItem>
+                  <SelectItem value="part-time">Part Time</SelectItem>
+                  <SelectItem value="contract">Contract</SelectItem>
+                  <SelectItem value="internship">Internship</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-          </div>
+            <div className="w-full md:w-48">
+              <Select value={location} onValueChange={setLocation}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Location" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="remote">Remote</SelectItem>
+                  <SelectItem value="new-york">New York</SelectItem>
+                  <SelectItem value="san-francisco">San Francisco</SelectItem>
+                  <SelectItem value="london">London</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="w-full md:w-48">
+              <Select value={salary} onValueChange={setSalary}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Salary Range" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="0-50k">$0 - $50k</SelectItem>
+                  <SelectItem value="50k-100k">$50k - $100k</SelectItem>
+                  <SelectItem value="100k-150k">$100k - $150k</SelectItem>
+                  <SelectItem value="150k+">$150k+</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Button type="submit" className="w-full md:w-auto bg-workify-blue hover:bg-blue-700">
+                Search Jobs
+              </Button>
+            </div>
+          </form>
         </div>
-      </div>
+        
+        <div className="mt-6 md:mt-12 flex justify-center">
+          <img src="/lovable-uploads/791c5abf-a844-481a-b4b0-8248c6f77267.png" alt="Workify Logo" className="h-32 w-32 md:h-48 md:w-48" />
+        </div>
+      </PageHeader>
       
       <div className="py-8 bg-white">
         <h2 className="text-2xl md:text-3xl font-bold mb-10 text-center">Getting Started...</h2>
@@ -182,7 +169,6 @@ const Index = () => {
             <Link to="/jobs" className="text-workify-blue hover:underline">View all jobs →</Link>
           </div>
           
-          {/* Filter buttons */}
           <div className="flex flex-wrap gap-3 mb-6">
             <Button variant="outline" className="flex items-center gap-1 rounded-full">
               <Calendar className="h-4 w-4" />
