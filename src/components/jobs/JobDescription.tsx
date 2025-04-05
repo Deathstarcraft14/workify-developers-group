@@ -28,21 +28,23 @@ const JobDescription: React.FC<JobDescriptionProps> = ({ description }) => {
           className="prose max-w-none space-y-4" 
           dangerouslySetInnerHTML={{ __html: enhancedDescription }} 
         />
-        <style jsx>{`
-          :global(.prose ul) {
-            list-style-type: disc;
-            padding-left: 1.5rem;
-            margin-bottom: 1.5rem;
-          }
-          :global(.prose ul li) {
-            margin-bottom: 0.5rem;
-            position: relative;
-          }
-          :global(.prose p) {
-            margin-bottom: 1rem;
-            line-height: 1.6;
-          }
-        `}</style>
+        <style>
+          {`
+            .prose ul {
+              list-style-type: disc;
+              padding-left: 1.5rem;
+              margin-bottom: 1.5rem;
+            }
+            .prose ul li {
+              margin-bottom: 0.5rem;
+              position: relative;
+            }
+            .prose p {
+              margin-bottom: 1rem;
+              line-height: 1.6;
+            }
+          `}
+        </style>
       </CardContent>
     </Card>
   );
