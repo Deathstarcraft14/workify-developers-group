@@ -1,11 +1,13 @@
 
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { Briefcase, MapPin, Clock, Building, DollarSign, FileText, Share2, Bookmark, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import Navbar from '../components/Navbar';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
 import ApplyJobForm from '@/components/ApplyJobForm';
+import JobDetailsHeader from '@/components/jobs/JobDetailsHeader';
+import JobDescription from '@/components/jobs/JobDescription';
+import JobOverview from '@/components/jobs/JobOverview';
+import JobActionButtons from '@/components/jobs/JobActionButtons';
 
 // Mock job data - in a real app, this would come from an API
 const jobData = {
@@ -99,107 +101,35 @@ const JobDetails = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Job Details Column */}
           <div className="lg:col-span-2">
-            <Card className="shadow-sm mb-6">
-              <CardContent className="pt-6">
-                <div className="flex items-start">
-                  <div className="w-16 h-16 bg-white rounded-lg mr-4 flex items-center justify-center border border-gray-100">
-                    <img src={job.companyLogo} alt={job.company} className="h-12 w-12 object-contain" />
-                  </div>
-                  <div>
-                    <h1 className="text-2xl font-bold mb-1">{job.title}</h1>
-                    <p className="text-gray-600 mb-2">{job.company}</p>
-                    
-                    <div className="flex flex-wrap gap-3 mb-4">
-                      <div className="flex items-center text-sm text-gray-500">
-                        <MapPin className="h-4 w-4 mr-1" />
-                        <span>{job.location}</span>
-                      </div>
-                      <div className="flex items-center text-sm text-gray-500">
-                        <Clock className="h-4 w-4 mr-1" />
-                        <span>Posted {job.postedDate}</span>
-                      </div>
-                      <div className="flex items-center text-sm text-gray-500">
-                        <Briefcase className="h-4 w-4 mr-1" />
-                        <span>{job.employmentType}</span>
-                      </div>
-                    </div>
-                    
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {job.skills.map((skill, index) => (
-                        <span key={index} className="badge">{skill}</span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            <JobDetailsHeader
+              title={job.title}
+              company={job.company}
+              location={job.location}
+              postedDate={job.postedDate}
+              employmentType={job.employmentType}
+              skills={job.skills}
+              companyLogo={job.companyLogo}
+            />
             
-            <Card className="shadow-sm mb-6">
-              <CardContent className="pt-6">
-                <h2 className="text-xl font-bold mb-4">Job Description</h2>
-                <div className="prose max-w-none" 
-                     dangerouslySetInnerHTML={{ __html: job.description }} />
-              </CardContent>
-            </Card>
+            <JobDescription description={job.description} />
           </div>
           
           {/* Apply Column */}
           <div className="lg:col-span-1">
-            <Card className="shadow-sm sticky top-4">
-              <CardContent className="pt-6">
-                <div className="mb-6">
-                  <h3 className="text-lg font-bold mb-2">Job Overview</h3>
-                  
-                  <div className="flex items-center justify-between py-3 border-b">
-                    <div className="flex items-center text-gray-600">
-                      <DollarSign className="h-4 w-4 mr-2" />
-                      <span>Salary</span>
-                    </div>
-                    <span className="font-medium">{job.salary}</span>
-                  </div>
-                  
-                  <div className="flex items-center justify-between py-3 border-b">
-                    <div className="flex items-center text-gray-600">
-                      <Briefcase className="h-4 w-4 mr-2" />
-                      <span>Job Type</span>
-                    </div>
-                    <span className="font-medium">{job.employmentType}</span>
-                  </div>
-                  
-                  <div className="flex items-center justify-between py-3 border-b">
-                    <div className="flex items-center text-gray-600">
-                      <Building className="h-4 w-4 mr-2" />
-                      <span>Experience</span>
-                    </div>
-                    <span className="font-medium">{job.experience}</span>
-                  </div>
-                </div>
-                
-                <div className="space-y-3">
-                  <Button className="w-full bg-workify-blue" onClick={handleApply}>
-                    Apply Now
-                  </Button>
-                  
-                  <div className="flex space-x-2">
-                    <Button variant="outline" className="flex-1" onClick={handleSaveJob}>
-                      <Bookmark className="h-4 w-4 mr-2" />
-                      Save
-                    </Button>
-                    <Button variant="outline" className="flex-1" onClick={handleShareJob}>
-                      <Share2 className="h-4 w-4 mr-2" />
-                      Share
-                    </Button>
-                  </div>
-                  
-                  <Link to="/quick-apply">
-                    <Button variant="outline" className="w-full">
-                      <FileText className="h-4 w-4 mr-2" />
-                      Quick Apply
-                    </Button>
-                  </Link>
-                </div>
-              </CardContent>
-            </Card>
+            <JobOverview
+              salary={job.salary}
+              employmentType={job.employmentType}
+              experience={job.experience}
+            >
+              <JobActionButtons
+                jobId={job.id}
+                jobTitle={job.title}
+                company={job.company}
+                onApply={handleApply}
+                onSave={handleSaveJob}
+                onShare={handleShareJob}
+              />
+            </JobOverview>
           </div>
         </div>
       </div>
