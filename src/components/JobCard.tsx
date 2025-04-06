@@ -12,6 +12,7 @@ interface JobCardProps {
   skills?: string[];
   variant?: 'default' | 'quick-apply';
   bgColor?: string;
+  children?: React.ReactNode;
 }
 
 const JobCard: React.FC<JobCardProps> = ({ 
@@ -22,7 +23,8 @@ const JobCard: React.FC<JobCardProps> = ({
   posted, 
   skills = [],
   variant = 'default',
-  bgColor
+  bgColor,
+  children
 }) => {
   const cardClass = bgColor ? 
     `job-card-alt ${variant === 'quick-apply' ? 'h-full' : ''}` : 
@@ -64,15 +66,19 @@ const JobCard: React.FC<JobCardProps> = ({
           )}
         </div>
         
-        <div className={`mt-4 ${variant === 'quick-apply' ? 'text-center' : 'text-right'}`}>
-          {variant === 'quick-apply' ? (
-            <button className="btn-primary w-full">Apply</button>
-          ) : (
-            <Link to="/job-details" className="btn-primary">
-              {variant === 'default' ? 'Learn More' : 'More Details'}
-            </Link>
-          )}
-        </div>
+        {children}
+        
+        {!children && (
+          <div className={`mt-4 ${variant === 'quick-apply' ? 'text-center' : 'text-right'}`}>
+            {variant === 'quick-apply' ? (
+              <button className="btn-primary w-full">Apply</button>
+            ) : (
+              <Link to="/job-details" className="btn-primary">
+                {variant === 'default' ? 'Learn More' : 'More Details'}
+              </Link>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
