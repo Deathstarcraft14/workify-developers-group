@@ -13,6 +13,7 @@ const Resume = () => {
       <PageHeader 
         title="Resume Builder" 
         subtitle="Create professional resumes easily and download them"
+        backgroundImage="/lovable-uploads/7c48a66b-e0a2-41c2-8837-b785a1799698.png"
       />
       
       <ResumeProvider>
