@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -46,7 +47,7 @@ const Index = () => {
       <PageHeader 
         title="Welcome to Workify" 
         subtitle="Where Job Hunting is Easier"
-        backgroundImage="/lovable-uploads/6706c6ec-b833-4c5e-bae4-54f734c6562a.png"
+        backgroundImage="/lovable-uploads/f8bf9171-4f2e-4c50-9302-1fa32c8af9ad.png"
       >
         <div className="mt-8 bg-white/90 backdrop-blur-sm rounded-lg p-4 shadow-lg">
           <form onSubmit={handleSearch} className="space-y-4 md:space-y-0 md:flex md:space-x-3">
