@@ -25,7 +25,7 @@ const Index = () => {
       <PageHeader 
         title="Welcome to Workify" 
         subtitle="Where Job Hunting is Easier"
-        backgroundImage="/lovable-uploads/f8bf9171-4f2e-4c50-9302-1fa32c8af9ad.png"
+        backgroundImage="/lovable-uploads/7c48a66b-e0a2-41c2-8837-b785a1799698.png"
       >
         <div className="mt-8">
           <SearchForm onSearch={handleSearch} />
