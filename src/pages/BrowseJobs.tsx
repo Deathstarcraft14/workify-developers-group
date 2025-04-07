@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { MapPin, ChevronDown, Search, X } from 'lucide-react';
 import Navbar from '../components/Navbar';
@@ -307,6 +306,7 @@ const BrowseJobs = () => {
             {filteredJobs.map((job) => (
               <JobCard
                 key={job.id}
+                id={job.id}
                 title={job.title}
                 company={job.company}
                 location={job.location}

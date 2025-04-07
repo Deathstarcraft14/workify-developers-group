@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Calendar, Building, MapPin, Filter, ChevronDown } from 'lucide-react';
@@ -69,6 +68,7 @@ const FeaturedJobs: React.FC = () => {
           {featuredJobs.map((job) => (
             <div key={job.id} className="flex flex-col h-full">
               <JobCard
+                id={job.id}
                 title={job.title}
                 company={job.company}
                 location={job.location}

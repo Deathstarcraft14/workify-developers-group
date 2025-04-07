@@ -4,6 +4,7 @@ import { MapPin, Clock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface JobCardProps {
+  id?: string | number;
   title: string;
   company: string;
   location: string;
@@ -16,6 +17,7 @@ interface JobCardProps {
 }
 
 const JobCard: React.FC<JobCardProps> = ({ 
+  id = '1', // Default ID if none provided
   title, 
   company, 
   location, 
@@ -73,7 +75,7 @@ const JobCard: React.FC<JobCardProps> = ({
             {variant === 'quick-apply' ? (
               <button className="btn-primary w-full">Apply</button>
             ) : (
-              <Link to="/job-details" className="btn-primary">
+              <Link to={`/job-details/${id}`} className="btn-primary">
                 {variant === 'default' ? 'Learn More' : 'More Details'}
               </Link>
             )}
