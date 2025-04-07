@@ -42,6 +42,7 @@ const SimilarJobs: React.FC<SimilarJobsProps> = ({ currentJobId }) => {
           {similarJobsData.map(job => (
             <JobCard
               key={job.id}
+              id={job.id}
               title={job.title}
               company={job.company}
               location={job.location}

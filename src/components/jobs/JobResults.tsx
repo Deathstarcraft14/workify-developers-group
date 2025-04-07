@@ -3,14 +3,14 @@ import React from 'react';
 import JobCard from '@/components/JobCard';
 
 interface Job {
-  id: number;
+  id: number | string;
   title: string;
   company: string;
   location: string;
-  salary: string;
+  salary?: string;
   skills: string[];
-  jobType: string;
-  posted: string;
+  jobType?: string;
+  posted?: string;
 }
 
 interface JobResultsProps {
