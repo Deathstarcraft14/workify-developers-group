@@ -10,8 +10,8 @@ const ResumeSummary: React.FC<ResumeSummaryProps> = ({ summary }) => {
   
   return (
     <div className="mb-6">
-      <h2 className="text-lg font-semibold border-b pb-1 mb-2">SUMMARY</h2>
-      <p className="text-sm text-gray-700">{summary}</p>
+      <h2 className="text-lg font-semibold border-b border-workify-blue pb-1 mb-3">PROFESSIONAL SUMMARY</h2>
+      <p className="text-sm text-gray-700 leading-relaxed">{summary}</p>
     </div>
   );
 };
