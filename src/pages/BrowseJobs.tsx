@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, ChevronDown, Search, X } from 'lucide-react';
 import Navbar from '../components/Navbar';
-import JobCard from '../components/JobCard';
 import PageHeader from '../components/PageHeader';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { 
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Badge } from '@/components/ui/badge';
+import JobSearchForm from '../components/jobs/JobSearchForm';
+import ActiveFilters from '../components/jobs/ActiveFilters';
+import JobResults from '../components/jobs/JobResults';
+import NoJobsFound from '../components/jobs/NoJobsFound';
+import JobsResultHeader from '../components/jobs/JobsResultHeader';
 import { useToast } from '@/hooks/use-toast';
 
 // Mock job data
@@ -196,136 +190,31 @@ const BrowseJobs = () => {
       
       {/* Search and Filters */}
       <div className="container mx-auto px-4 py-8">
-        <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-          <form onSubmit={handleSearchSubmit} className="flex flex-col md:flex-row gap-4">
-            <div className="relative flex-grow">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search size={18} className="text-gray-400" />
-              </div>
-              <Input
-                placeholder="Search job titles, companies or skills..."
-                className="pl-10"
-                value={searchQuery}
-                onChange={handleSearchChange}
-              />
-            </div>
-
-            <div className="flex flex-col sm:flex-row gap-3">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="flex justify-between w-full sm:w-48">
-                    <span className="flex items-center gap-2">
-                      <MapPin size={16} />
-                      {location}
-                    </span>
-                    <ChevronDown size={16} />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-48">
-                  {locations.map((loc) => (
-                    <DropdownMenuItem 
-                      key={loc} 
-                      onClick={() => handleLocationChange(loc)}
-                      className={location === loc ? "bg-gray-100 font-medium" : ""}
-                    >
-                      {loc}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-              
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" className="flex justify-between w-full sm:w-48">
-                    <span>{jobType}</span>
-                    <ChevronDown size={16} />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-48">
-                  {jobTypes.map((type) => (
-                    <DropdownMenuItem 
-                      key={type} 
-                      onClick={() => handleJobTypeChange(type)}
-                      className={jobType === type ? "bg-gray-100 font-medium" : ""}
-                    >
-                      {type}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-              <Button type="submit" className="bg-workify-blue hover:bg-blue-700">
-                Find Jobs
-              </Button>
-            </div>
-          </form>
-
-          {/* Active filters */}
-          {activeFilters.length > 0 && (
-            <div className="mt-4 flex flex-wrap items-center gap-2">
-              <span className="text-sm text-gray-500">Active filters:</span>
-              {activeFilters.map((filter, index) => (
-                <Badge
-                  key={index}
-                  variant="secondary"
-                  className="flex items-center gap-1 px-3 py-1"
-                >
-                  {filter.value}
-                  <X 
-                    size={14} 
-                    className="cursor-pointer ml-1"
-                    onClick={() => removeFilter(filter)}
-                  />
-                </Badge>
-              ))}
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="text-xs text-gray-500 hover:text-gray-700 ml-2"
-                onClick={clearAllFilters}
-              >
-                Clear all
-              </Button>
-            </div>
-          )}
-        </div>
+        <JobSearchForm 
+          searchQuery={searchQuery}
+          location={location}
+          jobType={jobType}
+          locations={locations}
+          jobTypes={jobTypes}
+          onSearchChange={handleSearchChange}
+          onSearchSubmit={handleSearchSubmit}
+          onLocationChange={handleLocationChange}
+          onJobTypeChange={handleJobTypeChange}
+        />
         
-        {/* Results count */}
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-lg font-semibold text-gray-700">
-            {filteredJobs.length} {filteredJobs.length === 1 ? 'job' : 'jobs'} found
-          </h2>
-          <div className="text-sm text-gray-500">
-            Sort by: <span className="font-medium">Most recent</span>
-          </div>
-        </div>
+        <ActiveFilters 
+          activeFilters={activeFilters}
+          onRemoveFilter={removeFilter}
+          onClearAllFilters={clearAllFilters}
+        />
+        
+        <JobsResultHeader jobCount={filteredJobs.length} />
 
         {/* Job Listings */}
         {filteredJobs.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredJobs.map((job) => (
-              <JobCard
-                key={job.id}
-                id={job.id}
-                title={job.title}
-                company={job.company}
-                location={job.location}
-                salary={job.salary}
-                skills={job.skills}
-              />
-            ))}
-          </div>
+          <JobResults jobs={filteredJobs} />
         ) : (
-          <div className="text-center py-12">
-            <div className="text-gray-400 mb-4">
-              <Search size={48} className="mx-auto" />
-            </div>
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">No jobs found</h3>
-            <p className="text-gray-500 mb-6">
-              Try adjusting your search criteria or removing some filters
-            </p>
-            <Button onClick={clearAllFilters}>Clear all filters</Button>
-          </div>
+          <NoJobsFound onClearFilters={clearAllFilters} />
         )}
       </div>
     </div>
